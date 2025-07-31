@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RAG BOT</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+    .header {
+      text-align: center;
+      padding: 15px;
+      background-color: #004aad;
+      color: white;
+    }
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+      width: 100%;
+      height: calc(100vh - 80px);
+    }
+    .section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    .collections { width: 50%; }
+    .standards { width: 50%; }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      background: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .chat-input {
+      display: flex;
+      padding: 10px 0 0 0;
+      border-top: 1px solid #ddd;
+      background: white;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background: #004aad;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+      border-radius: 5px;
+    }
+    .user-message, .bot-message {
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+    .user-message { background-color: #dff0ff; }
+    .bot-message { background-color: #e2ffe8; }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      margin-top: 10px;
+      flex: 1;
+    }
+    .chat-select {
+      margin: 10px;
+      padding: 5px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .pdf-select-container {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>RAG BOT</h2>
+  </div>
+
+  <div class="main-container">
+    <!-- Collections (Chat Section) -->
+    <div class="section collections">
+      <select id="collectionSelect" class="chat-select">
+        <option value="ALL">All Collections</option>
+        <!-- Dynamic collections will be added here -->
+      </select>
+
+      <div id="chat-box" class="chat-box"></div>
+
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Ask your question..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <!-- Standards (PDF Section) -->
+    <div class="section standards">
+      <div class="pdf-select-container">
+        <select id="pdfSelect" class="chat-select">
+          <option value="">Select a Standard PDF</option>
+        </select>
+      </div>
+      <iframe id="pdfViewer"></iframe>
+    </div>
+  </div>
+
+  <script>
+    async function loadCollections() {
+      try {
+        const response = await fetch('http://127.0.0.1:8017/api/list-collections');
+        const data = await response.json();
+
+        if (data.collections) {
+          const collectionSelect = document.getElementById('collectionSelect');
+
+          // Remove existing options except "All Collections"
+          collectionSelect.innerHTML = `<option value="ALL">All Collections</option>`;
+
+          data.collections.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            collectionSelect.appendChild(option);
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching collections:', error);
+      }
+    }
+
+    async function loadPDFLibrary() {
+      try {
+        const response = await fetch('http://127.0.0.1:8017/api/list-pdfs');
+        const data = await response.json();
+        const pdfSelect = document.getElementById('pdfSelect');
+
+        pdfSelect.innerHTML = `<option value="">Select a Standard PDF</option>`;
+
+        data.pdfs.forEach(pdf => {
+          const option = document.createElement('option');
+          option.value = pdf;
+          option.textContent = pdf;
+          pdfSelect.appendChild(option);
+        });
+
+        pdfSelect.addEventListener('change', function() {
+          document.getElementById('pdfViewer').src = this.value
+            ? `http://127.0.0.1:8017/pdfs/${this.value}`
+            : '';
+        });
+      } catch (error) {
+        console.error('Error loading PDFs:', error);
+      }
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      const collection = document.getElementById("collectionSelect").value;
+
+      if (!message) return;
+
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML += `<div class="user-message"><b>You:</b> ${message}</div>`;
+      input.value = "";
+
+      try {
+        let selectedCollections = [];
+        if (collection === "ALL") {
+          const allOptions = [...document.getElementById("collectionSelect").options];
+          selectedCollections = allOptions
+            .filter(opt => opt.value !== "ALL")
+            .map(opt => opt.value);
+        } else {
+          selectedCollections = [collection];
+        }
+
+        const bodyPayload = { collection_id: selectedCollections, query: message, top_k: 5 };
+
+        const response = await fetch("http://127.0.0.1:8017/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyPayload)
+        });
+
+        const data = await response.json();
+
+        if (data.answer) {
+          chatBox.innerHTML += `<div class="bot-message"><b>Bot:</b> ${data.answer}</div>`;
+        } else {
+          chatBox.innerHTML += `<div class="bot-message">No response from server.</div>`;
+        }
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (error) {
+        chatBox.innerHTML += `<div class="bot-message">Error: ${error.message}</div>`;
+      }
+    }
+
+    document.getElementById("userInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    window.onload = function() {
+      loadCollections();
+      loadPDFLibrary();
+    };
+  </script>
+
+</body>
+</html>
