@@ -2,232 +2,2217 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>RAG BOT</title>
+  <title>Design.py</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Carter+One&display=swap" rel="stylesheet" />
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f1f1f1;
-    }
-    .header {
-      text-align: center;
-      padding: 15px;
-      background-color: #004aad;
-      color: white;
-    }
-    .main-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 20px;
-      box-sizing: border-box;
-      width: 100%;
-      height: calc(100vh - 80px);
-    }
-    .section {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      background: #e9e9e9;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      overflow: hidden;
+      overflow-x: hidden;
     }
-    .collections { width: 50%; }
-    .standards { width: 50%; }
-    .chat-box {
-      flex: 1;
-      overflow-y: auto;
-      background: #f9f9f9;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin-bottom: 10px;
-    }
-    .chat-input {
+      body {
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      background: #e9e9e9;
+      min-height: 100vh;
       display: flex;
-      padding: 10px 0 0 0;
-      border-top: 1px solid #ddd;
-      background: white;
+      flex-direction: column;
+      overflow-x: hidden;
     }
-    .chat-input input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+    #main-header, #site-footer { display: none; }
+    body.show-headerfooter #main-header,
+    body.show-headerfooter #site-footer {
+      display: flex;
     }
-    .chat-input button {
-      padding: 10px 20px;
-      background: #004aad;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-left: 10px;
-      border-radius: 5px;
-    }
-    .user-message, .bot-message {
-      margin: 5px 0;
-      padding: 8px;
-      border-radius: 5px;
-      white-space: pre-wrap;
-    }
-    .user-message { background-color: #dff0ff; }
-    .bot-message { background-color: #e2ffe8; }
-    iframe {
+    /* Header styles */
+   /* Header styles */
+.header-bar {
+  position: fixed;
+  font-size: 0.5cm;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 105px;
+  width: 100%;              /* fixed */
+  background: #ffffff;      /* fixed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow for better look */
+}
+
+.brand-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.brand-left img {
+  width: 120px;   /* increased logo size */
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.brand-left .provided-by {
+  font-size: 0.95em;
+  color: #222;
+  margin-top: 1px;
+}
+
+.brand-left .orange {
+  color: #ff5100;
+  font-weight: 700;
+}
+
+nav.top-nav ul {
+  display: flex;
+  gap: 1.5em;      /* a little more spacing between links */
+  list-style: none;
+  font-weight: 600;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav.top-nav a {
+  color: #000;
+  text-decoration: none;
+  padding: 6px 10px; /* slightly larger clickable area */
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+nav.top-nav a:hover,
+nav.top-nav a:focus,
+nav.top-nav a.active {
+  border-bottom-color: #ff5100;
+  color: #ff5100;  /* also change text color on hover for better effect */
+}
+    footer.site-footer {
+  width: 100%;
+  background: #fff; color: #111; border-top: 1px solid #cfcfcf;
+  padding: 18px 4vw 14px; position: relative;
+  margin-top: auto; z-index: 500;
+  display: flex; flex-direction: column;
+}
+.footer-grid {
+  display: grid; gap: 14px; align-items: start;
+  grid-template-columns: 1fr 2fr 1.3fr;
+  max-width: 1200px; margin: 0 auto;
+}
+
+/* ---- UPDATED CENTER COLUMN ---- */
+.footer-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  justify-content: center;
+  text-align: center;
+  justify-self: center;     /* Center the entire column */
+}
+
+.footer-mid strong {
+  margin-bottom: 8px;
+  font-size: 0.5cm;
+  display: block;
+}
+
+.footer-mid > div {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Social icons */
+.footer-social {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: transparent;
+  transition: box-shadow 0.18s, transform 0.16s;
+}
+
+.footer-social a.yt:hover {
+  background: #cc0000;
+  box-shadow: 0 2px 7px rgba(204,0,0,0.20);
+  transform: scale(1.08);
+}
+
+.footer-social a.li:hover {
+  background: #0a66c2;
+  box-shadow: 0 2px 7px rgba(10,102,194,0.18);
+  transform: scale(1.08);
+}
+
+.footer-social svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #fff;
+}
+/* ---- END UPDATED CENTER COLUMN ---- */
+
+.footer-col ul { list-style: none;font-size: 0.5cm; text-align: left; }
+.footer-col a { color: #111; text-decoration: none; }
+.footer-col a:hover { text-decoration: underline;  }
+.footer-mid strong { display: block; margin-bottom: 6px; }
+.footer-copy { max-width: 1200px; margin: 14px auto 0; border-top: 1px solid #cfcfcf; padding-top: 8px; text-align: center; font-size: .92em; }
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1cm; }
+}
+.footer-grid {
+  display: grid;
+  gap: 30px;
+  align-items: start;
+  grid-template-columns: 1fr 2fr 1fr;  /* center a little wider */
+  max-width: 1800px;
+  margin: 0 auto;
+}
+/* Left column (menu links) */
+.footer-col:first-child {
+  text-align: right;            /* align text to left */
+  justify-self: start;
+}
+
+/* Right column (contact details) */
+.footer-col:last-child {
+  font-size: 0.47cm;
+  text-align: start;   /* align all contact info under "Contact" */
+  justify-self: right;  /* still keeps it on the right side */
+}
+    /* ==== Frontpage ==== */
+    #frontpage-container { display: none; flex: 1; flex-direction: column; align-items: center; }
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; text-align: center;
+      padding: 40px 20px;
       width: 100%;
-      height: 100%;
-      border: none;
-      margin-top: 10px;
-      flex: 1;
+      background: linear-gradient(to bottom, #ffffff 50%, #797775 100%);
+      border-bottom: none;
+      margin-top: 64px;
     }
-    .chat-select {
-      margin: 10px;
-      padding: 5px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    .hero h1 { 
+      font-size: 2cm; 
+      font-family: "Cinzel Decorative", serif;
+      font-weight: 700; 
+      color: #222; line-height: 1.25;
+     }
+       
+    .hero .tag {
+  font-family: 'Carter One', normal;
+  max-width: 1400px;
+  margin: 0 auto 40px auto;  /* added bottom margin for spacing */
+  color: #2a2a2a;
+  font-size: 0.9cm;
+  font-weight: normal;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 18px 30px;
+  border-radius: 25px;
+  border: 0;
+  cursor: pointer;
+  background: #363535;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  transition: transform .15s ease, background .25s ease;
+  margin-top: 20px;  /* ensures button has breathing space from the tag */
+}
+
+.btn:hover,
+.btn:focus {
+  background: #222;
+  transform: scale(1.08);  /* slightly more zoom on hover */
+}
+    .section-wrap { max-width: 1024px; width: 96%; margin: 26px auto; }
+    .section-wrap h2 { font-size: 1cm; font-weight: 700; margin-bottom: 12px; }
+    .section-wrap ul { padding-left: 18px; }
+    .section-wrap li {
+  font-size: 0.6cm;
+  width: 100%;       /* full page width */
+  margin-bottom: 10px;
+  line-height: 1.62;
+  max-width: none;   /* overrides 1400px */
+}
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ==== Login ==== */
+ #login-container {
+  min-height: 100vh;
+ background: linear-gradient(to bottom, #9c9c9c, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+   .login-box {
+  background: linear-gradient(to bottom, 
+    #a6a6a6 15%, 
+    #ffffff 100%);
+  padding: 70px;         /* more inner spacing */
+  border-radius: 50px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+  width: 500px;          /* increased width */
+  height: 550px;         /* increased height */
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+    .login-box h2 { margin-bottom: 10px; font-size: 1cm; font-family: "Cinzel Decorative", serif; color: #ffffff; }
+    .login-box .subtitle { margin-bottom: 25px; font-size: 0.52cm; font-family: "Cinzel Decorative", serif; color: #181818; font-weight: bold; }
+    .login-box input {
+      width: 100%; padding: 13px; margin: 10px 0; border: 1px solid #000000; border-radius: 10px;
+      outline: none; font-size: 22px; font-family:'Times New Roman', Times, serif; transition: border-color 0.3s;
     }
-    .pdf-select-container {
-      padding: 10px;
+    .login-box input:focus { border-color: #080808; }
+    .login-box .login-btn { width: 50%; padding: 15px; margin: 15px auto 0; display: block; background: #3f3f41; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 22px; font-family:'Times New Roman', Times, serif; font-weight: 600; transition: background 0.3s;}
+    .login-box .login-btn:hover { background: #3e3f41;}
+    .divider { margin: 20px 0; font-size: 16px; font-family:'kite one' serif; color: #000000; position: relative; }
+    .divider::before,
+    .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: #7c7979;}
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .google-btn { width: 100%; padding: 15px; background: #fff; color: #444; border: 1px solid #000000; border-radius: 10px; cursor: pointer; font-size: 22px; font-family:'Times New Roman', Times, serif; transition: all 0.3s; font-weight: bold; }
+    .google-btn:hover { background: #f3f4f6; }
+
+   /* ==== Dashboard ==== */
+    #dashboard-container {
+      text-align: center;
+       background: linear-gradient(to bottom, #9c9c9c, #ffffff);
+      padding: 60px 20px;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
+    #dashboard-container h1 {
+        font-family: "Cinzel Decorative", normal;
+
+      font-size: 1.1cm;
+      font-weight: 700;
+      margin-bottom: 50px;
+      color: #000000;
+      text-shadow: #ffffff;
+      word-spacing: 3px;
+    }
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Three columns per row */
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      max-width: 900px;
+      width: 100%;
+    }
+    .tool-card {
+      background: #a6a6a6 ;
+      color: #000000;
+      border-radius: 25px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      font-family: 'Times New Roman', Times, serif;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      width: 250px;
+      height: 200px;
+      box-shadow:0 4px 24px rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px; 
+      border: 3px solid #494949;  
+      position: relative;
+    }
+    .tool-card:hover {
+      background: linear-gradient(to bottom, #ffffff 50%, #887f76 100%);
+    }
+    .card-img {
+      width: 300px;
+      height: 245px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      transform: scale(0.7) translateY(-1.5px) translateX(-1.5px);
+      transform-origin: center;
+      object-fit: cover;
+      border-radius: 25px;
+    }
+    @media (max-width: 990px) {
+      .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 600px;
+      }
+    }
+    @media (max-width: 660px) {
+      .tool-grid {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+      }
+      .tool-card {
+        width: 90vw;
+        font-size: 18px;
+        height: 120px;
+      }
+      #dashboard-container h1 {
+        font-size: 0.8cm;
+      }
+    }
+/* ==== Chat ==== */
+#app-container {
+  display: none;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* ==== Header ==== */
+#app-container header {
+  background: linear-gradient(to bottom, #534e4e, #666666);
+  border: 1px solid #000000;
+  color: rgb(240, 238, 238);
+  padding: 16px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Edo', cursive;
+  text-shadow: 1px 1px 1px #000000;
+  cursor: pointer;
+  user-select: none;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==== Main Container ==== */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+  margin-right: 320px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ==== Sidebar ==== */
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #b3b3b3, #ffffff);
+  border: 1px solid #000000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid #2a2a2a;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 15px;
+  overflow-y: auto;
+}
+
+/* ==== Dropdown Styles ==== */
+.dropdowns label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+}
+
+.dropdowns select {
+  width: 100%;
+  font-size: 16px;
+  height: 50px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  font-family: 'Times New Roman', serif;
+  background-color: #f7f7f7;
+  color: #222;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.dropdowns select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.dropdowns select:hover {
+  border-color: #666;
+}
+
+/* ==== Chat Section ==== */
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ==== Chat Box ==== */
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* ==== Input Area ==== */
+.input-area {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-area input:focus {
+  outline: none;
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.input-area button {
+  background-color: #2a2a2b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.1s;
+  min-width: 80px;
+}
+
+.input-area button:hover {
+  background-color: #545455;
+  transform: translateY(-1px);
+}
+
+.input-area button:active {
+  transform: translateY(0);
+}
+
+/* ==== PDF Preview ==== */
+.pdf-preview {
+  width: 0;
+  overflow: hidden;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+  border-left: 1px solid #ccc;
+  padding: 0;
+}
+
+.pdf-preview.active {
+  width: 65%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==== Home Button ==== */
+.home-button {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #424141;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ccc4c4;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+
+.home-button:hover {
+  background-color: #000;
+  transform: translateX(-50%) scale(1.1);
+  color: #fff;
+}
+
+/* ==== Animations ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==== Chat Messages ==== */
+/* Chat Messages */
+.user-message, .bot-message {
+  margin: 10px 0;
+  padding: 5px 0;
+  border-radius: 0;
+  background: none;
+  white-space: pre-wrap;
+  max-width: 100%;
+  line-height: 1.5;
+  font-size: 14px;
+  color: #181818;
+}
+
+.user-message {
+  font-weight: bold;
+  text-align: right;
+  font-family: 'Times New Roman', cursive;
+}
+
+.bot-message {
+  text-align: left;
+  font-family: 'Times New Roman', serif;
+}
+/* ==== Responsive Design ==== */
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+  
+  .chat-section {
+    padding: 15px;
+  }
+  
+  .home-button {
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+/* ==== Scrollbar Styling ==== */
+.chat-box::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.chat-box::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+/* AI Duct Sizing Tool styles */
+
+/* ==== Full Width Table Container ====  */
+#ductTool {
+  display: none;
+  padding: 15px;
+  background: #ececec !important; /* Light grey background */
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* ==== Table Container without Horizontal Scroll ==== */
+.table-container {
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  height: 75vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  background: white;
+  position: relative;
+}
+
+/* ==== Resizable Data Table ==== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.85rem;
+  table-layout: fixed; /* CRITICAL: Fixed layout for resizable columns */
+  position: relative;
+}
+
+/* ==== Column Headers with Resize Handles ==== */
+.data-table th {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  background: linear-gradient(135deg, #eb8108, #d67207);
+  color: #000;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==== Resize Handle for Column Headers ==== */
+.data-table th::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 15;
+  border-right: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.data-table th:hover::after {
+  border-right-color: rgba(255, 255, 255, 0.6);
+}
+
+.data-table th.resizing::after {
+  border-right-color: #fff;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==== Default Column Widths (Resizable) ==== */
+.data-table th:nth-child(1) { width: 60px; min-width: 50px; }
+.data-table th:nth-child(2) { width: 200px; min-width: 120px; }
+.data-table th:nth-child(3) { width: 140px; min-width: 100px; }
+.data-table th:nth-child(4) { width: 80px; min-width: 60px; }
+.data-table th:nth-child(5) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(6) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(7) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(8) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(9) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(10) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(11) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(12) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(13) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(14) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(15) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(16) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(17) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(18) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(19) { width: 120px; min-width: 100px; }
+
+/* ==== Table Cells ==== */
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==== Input Field Sizing ==== */
+.editableinput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  height: 26px;
+  background: transparent;
+}
+
+.tagname-input {
+  min-width: 100px !important;
+}
+
+/* ==== Actions Button Container ==== */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  background: #ececec !important; /* Adds gray strip behind the buttons */
+}
+
+.actions button,
+.actions label[role="button"] {
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-width: 120px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.actions button:hover,
+.actions label[role="button"]:hover {
+  background: #333 !important;
+  transform: translateY(-1px);
+}
+
+/* ==== Title Styling ==== */
+#ductTool h2 {
+  font-family: 'Carter One', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ==== Visual Indicators ==== */
+.auto-calc {
+  background-color: #f8f9fa !important;
+  color: #666 !important;
+  font-weight: 500;
+}
+
+.target-value {
+  background-color: #e3f2fd !important;
+  font-weight: bold !important;
+}
+
+.override-field {
+  border: 2px dashed #ec7310ec !important;
+}
+
+.highlight {
+  background: linear-gradient(135deg, #ffe1e1, #ffd6d6) !important;
+  color: #b30000 !important;
+  font-weight: 600 !important;
+}
+
+.merged-row {
+  background: linear-gradient(135deg, #e8f5e8, #d4edda) !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  border-left: 4px solid #ffffff !important;
+}
+
+/* ==== Responsive Adjustments ==== */
+@media (max-width: 1200px) {
+  .data-table th, .data-table td {
+    font-size: 0.8rem;
+    padding: 5px 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  #ductTool {
+    padding: 10px;
+  }
+  .table-container {
+    max-width: calc(100vw - 20px);
+    height: 70vh;
+  }
+  .actions {
+    gap: 8px;
+  }
+  .actions button, .actions label[role="button"] {
+    min-width: 100px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ==== Column Resize Cursor ==== */
+.data-table.resizing {
+  cursor: col-resize;
+}
+
+.data-table.resizing * {
+  cursor: col-resize !important;
+}
+
+.critical-highlight {
+  color: red;
+  font-weight: bold;
+}
+.hero,
+#login-container,
+#dashboard-container,
+.section-wrap {
+  margin-top: 120px;  /* push content below the 105px header */
+}
+
   </style>
 </head>
-<body>
+<body class="show-headerfooter">
+  <!-- HEADER (Only on frontpage) -->
+  <header class="header-bar" id="main-header" role="banner">
+    <div class="brand-left" aria-label="Brand">
+     <img src="logo.jpg" alt="Design.py Logo" 
+     style="width:195px; height:157px; margin-left:auto; transform: scale(0.7); transform-origin: center;">
+    </div>
+    <nav class="top-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#home" id="nav-home">Home</a></li>
+        <li><a href="#aboutus" id="nav-about">About Us</a></li>
+        <li><a href="#features" id="nav-features">Features</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- FRONT PAGE -->
+  <div id="frontpage-container">
+    <section id="view-home" class="view active" aria-labelledby="homeTitle">
+      <div class="hero">
+        <h1 id="homeTitle">SUPERCHARGE YOUR MEP<br>PROJECTS WITH AI PRECISION</h1>
+        <p class="tag">Get MEP standards answers in seconds. Save time, avoid errors, and keep projects on track with AI-powered guidance.</p>
+        <button class="btn" onclick="showPage('login-container')">GET STARTED</button>
+      </div>
+    </section>
+    <section id="view-features" class="view" aria-labelledby="featuresTitle">
+      <div class="section-wrap">
+        <h2 id="featuresTitle">Features:</h2>
+        <ul>
+ 
+          <li>Ask building code and MEP questions – get answers sourced from official standards.</li>
+<li>Supported standards: NBC, IS Codes, IEC, NFPA, ASHRAE, and more.</li>
+<li>Every response cites the relevant clause, page, and table.</li>
+<li>No uploads or registration needed — just chat and get answers instantly.</li>
+        </ul>
+      </div>
+    </section>
+    <section id="view-aboutus" class="view" aria-labelledby="aboutTitle">
+      <div class="section-wrap">
+        <h2 id="aboutTitle">About Us:</h2>
+        <ul>
+          
+          <li>RNEW Consulting Engineers is an advanced consulting engineering firm based in Bengaluru, Karnataka.</li>
+<li>We specialize in mechanical, electrical, and plumbing (MEP) solutions, sustainable building design, project management, and product development for all types of infrastructure.</li>
+<li>Our team merges deep technical expertise with cutting-edge AI technologies to deliver tools like Designpy, giving engineers instant answers from Indian and international building standards.</li>
+<li>Driven by quality, innovation, and client success, we serve businesses, architects, contractors, and professionals across India and beyond.</li>
+<li>With every project, we aim to save time, reduce errors, and build smarter, more resilient environments.</li>
 
-  <div class="header">
-    <h2>RAG BOT</h2>
+        </ul>
+      </div>
+    </section>
   </div>
 
-  <div class="main-container">
-    <!-- Collections (Chat Section) -->
-    <div class="section collections">
-      <select id="collectionSelect" class="chat-select">
-        <option value="ALL">All Collections</option>
-        <!-- Dynamic collections will be added here -->
-      </select>
-
-      <div id="chat-box" class="chat-box"></div>
-
-      <div class="chat-input">
-        <input type="text" id="userInput" placeholder="Ask your question..." />
-        <button onclick="sendMessage()">Send</button>
-      </div>
-    </div>
-
-    <!-- Standards (PDF Section) -->
-    <div class="section standards">
-      <div class="pdf-select-container">
-        <select id="pdfSelect" class="chat-select">
-          <option value="">Select a Standard PDF</option>
-        </select>
-      </div>
-      <iframe id="pdfViewer"></iframe>
+  <!-- LOGIN PAGE -->
+  <div id="login-container">
+  
+  <div class="login-box">
+      <h2>Welcome</h2>
+      <p class="subtitle">Login to Designpy to continue to Designpy.</p>
+      <form>
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
+      </form>
+      <div class="divider">OR</div>
+      <button class="google-btn">Continue with Google</button>
     </div>
   </div>
 
-  <script>
-    async function loadCollections() {
-      try {
-        const response = await fetch('http://127.0.0.1:8017/api/list-collections');
-        const data = await response.json();
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboard-container">
+  <h1>Welcome to MEP Engineering AI Tools</h1>
+  <div class="tool-grid">
+    
+    <!-- Chat Bot with image -->
+    <div class="tool-card" onclick="openTool('chatbot')">
+      <img src="botlogo.jpg" alt="Chat Bot Logo" class="card-img">
+    </div>
 
-        if (data.collections) {
-          const collectionSelect = document.getElementById('collectionSelect');
+    <!-- Duct Sizer -->
+        <div class="tool-card" onclick="openTool('duct')">
+  <img src="ductlogo.jpg" alt="AI duct sizing" 
+       class="card-img" 
+       style="  width: 300px;
+      height: 195px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      transform: scale(0.93) translateY(-1px) translateX(-1px);
+      transform-origin: center;
+      object-fit: cover;
+      border-radius: 25px;">
+</div>
 
-          // Remove existing options except "All Collections"
-          collectionSelect.innerHTML = `<option value="ALL">All Collections</option>`;
+    <!-- Pipe Sizer -->
+     <div class="tool-card" onclick="openTool('pipe')">
+      <img src="pipe size.jpg" alt="AI pipe sizing" 
+       class="card-img" 
+       style="  width: 300px;
+      height: 195px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      transform: scale(0.93) translateY(1px) translateX(1px);
+      transform-origin: center;
+      object-fit: cover;
+      border-radius: 25px;">
+</div>
 
-          data.collections.forEach(name => {
-            const option = document.createElement('option');
-            option.value = name;
-            option.textContent = name;
-            collectionSelect.appendChild(option);
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching collections:', error);
-      }
-    }
+    <!-- Placeholder tools -->
+    <div class="tool-card" onclick="openTool('mep')">
+      <p>MEP AI Tool</p>
+    </div>
 
-    async function loadPDFLibrary() {
-      try {
-        const response = await fetch('http://127.0.0.1:8017/api/list-pdfs');
-        const data = await response.json();
-        const pdfSelect = document.getElementById('pdfSelect');
+    <div class="tool-card" onclick="openTool('other')">
+      <p>Other AI Tools</p>
+    </div>
 
-        pdfSelect.innerHTML = `<option value="">Select a Standard PDF</option>`;
+  </div>
+</div>
 
-        data.pdfs.forEach(pdf => {
-          const option = document.createElement('option');
-          option.value = pdf;
-          option.textContent = pdf;
-          pdfSelect.appendChild(option);
-        });
 
-        pdfSelect.addEventListener('change', function() {
-          document.getElementById('pdfViewer').src = this.value
-            ? `http://127.0.0.1:8017/pdfs/${this.value}`
-            : '';
-        });
-      } catch (error) {
-        console.error('Error loading PDFs:', error);
-      }
-    }
+  <!-- CHAT PAGE -->
+  <div id="app-container">
+    <header>Welcome to MEPGuide AIBOT</header>
+    <div class="container">
+      <div class="chat-section" id="chatSection">
+        <div class="chat-box" id="chatBox">
+          <div class="bot-message">Welcome! Ask your question.</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="userInput" placeholder="Ask your question..." />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+      <div class="pdf-preview" id="pdfPreview">
+        <h3>PDF Preview</h3>
+        <p id="pdfFilename">No PDF selected</p>
+        <iframe id="pdfViewer" title="PDF Viewer" style="width:100%; height:80vh; border:none;"></iframe>
+      </div>
+      <div class="sidebar">
+        <div class="dropdowns">
+          <label for="collectionDropdown">Select Collection</label>
+          <select id="collectionDropdown">
+            <option value="ALL">All Collections</option>
+          </select>
+          <label for="pdfDropdown">Standard PDFs</label>
+          <select id="pdfDropdown">
+            <option value="">Select a Standard PDF</option>
+          </select>
+          <button class="home-button" onclick="showPage('dashboard-container')">⌂</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    async function sendMessage() {
-      const input = document.getElementById("userInput");
-      const message = input.value.trim();
-      const collection = document.getElementById("collectionSelect").value;
+   <!-- AI Duct Sizing Tool -->
+<section id="ductTool" aria-label="AI duct sizing tool" style="display:none;">
+  <h2>AI Duct Sizing Tool</h2>
 
-      if (!message) return;
+  <div class="actions" role="region" aria-label="Duct sizing actions">
+    <input type="file" id="fileUpload" accept=".xls,.xlsx,.csv,.pdf,image/*" style="display:none" onchange="uploadFile()" />
+    <label for="fileUpload" role="button" tabindex="0" aria-controls="ductTable">Upload File</label>
+    <button type="button" onclick="downloadExcel()">Download Excel</button>
+    <button type="button" onclick="downloadPdf()">Download PDF</button>
+    <button id="toggleMergeBtn" type="button" onclick="toggleMerge()">Enable Merge</button>
+    <button id="toggleDeleteBtn" type="button" onclick="toggleDelete()" style="background: #000000;">Delete Rows</button>
+    <button type="button" onclick="addNewRow()" style="background: #000000;">+ Add Row</button>
+    <button type="button" onclick="addNewPage()" style="background: #007bff; color: #fff; margin-left: 8px;">+ Add New Page</button>
+    <button type="button" onclick="backToDashboard()">Back to Dashboard</button>
+  </div>
 
-      const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML += `<div class="user-message"><b>You:</b> ${message}</div>`;
-      input.value = "";
+        <div class="table-container" id="ductTable">
+            <table class="data-table resizable-table" aria-describedby="ductToolDesc">
+                <thead>
+                    <tr>
+                        <th data-column="0">Sl. No</th>
+                        <th data-column="1" class="tagname-col">Tag name</th>
+                        <th data-column="2">Type fitting</th>
+                        <th data-column="3">Fitting no</th>
+                        <th data-column="4">Flow rate, m3/hr</th>
+                        <th data-column="5">Length, M/No</th>
+                        <th data-column="6">Nom. dia, mm</th>
+                        <th data-column="7">Duct height, mm</th>
+                        <th data-column="8">Duct width, mm</th>
+                        <th data-column="9">Eq dia, mm</th>
+                        <th data-column="10">Aspect ratio</th>
+                        <th data-column="11">Roughness in duct</th>
+                        <th data-column="12">Reynolds number in duct</th>
+                        <th data-column="13">Duct friction co-eff</th>
+                        <th data-column="14">Fitting K factor PDCF</th>
+                        <th data-column="15">Face velocity, m/s</th>
+                        <th data-column="16" class="highlight">Pressure drop, Pa/m</th>
+                        <th data-column="17">Pressure drop, Pa</th>
+                        <th data-column="18">Mark critical path c</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </section>
 
-      try {
-        let selectedCollections = [];
-        if (collection === "ALL") {
-          const allOptions = [...document.getElementById("collectionSelect").options];
-          selectedCollections = allOptions
-            .filter(opt => opt.value !== "ALL")
-            .map(opt => opt.value);
-        } else {
-          selectedCollections = [collection];
-        }
+  <!-- FOOTER (Only on frontpage) -->
+  <footer class="site-footer" id="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <ul>
+          <li><a href="#home" id="ftr-home">Home</a></li>
+          <li><a href="#aboutus" id="ftr-about">About Us</a></li>
+          <li><a href="#features" id="ftr-features">Features</a></li>
+        </ul>
+      </div>
+     <div class="footer-col footer-mid">
+  <strong>Designpy provided by R<span class="orange">E</span>NEW Consulting Engineers</strong>
+  <div>
+    We are a consulting engineering company providing innovative and sustainable
+    solutions for buildings, infrastructure, and product development.
+  </div>
+  <div class="footer-social" aria-label="Social media">
+    <a class="yt" href="https://www.youtube.com/@Renew_consulting" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#CC181E"></rect>
+        <path d="M16.8 8.8c-.2-.7-.8-1.3-1.4-1.4C14.3 7 12 7 12 7s-2.3 0-3.4.3c-.7.2-1.2.8-1.4 1.4C7 9.9 7 12 7 12s0 2.1.2 3.2c.2.7.8 1.3 1.4 1.4 1.1.3 3.4.3 3.4.3s2.3 0 3.4-.3c.7-.2 1.2-.8 1.4-1.4.2-1.1.2-3.2.2-3.2s0-2.1-.2-3.2zM10.5 14.2V9.8L14.4 12l-3.9 2.2z" fill="#fff"/>
+      </svg>
+    </a>
+    <a class="li" href="https://www.linkedin.com/company/renew-consulting-engineers-private-limited/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#0077B5"></rect>
+        <path d="M6.95 9h2.1v7h-2.1V9zm1.05-3c.7 0 1.05.46 1.05 1.06C9.05 7.54 8.7 8 7.95 8c-.69 0-1.05-.46-1.05-1.06C6.9 6.46 7.25 6 7.95 6zm9.05 4.8v5.2h-2.1v-4.62c0-1.33-.56-1.98-1.47-1.98-.96 0-1.48.65-1.48 1.98V16h-2.08v-7h2.08v.9c.33-.52 1.09-1.26 2.25-1.26 1.59 0 2.8 1.01 2.8 3.16z" fill="#fff"/>
+      </svg>
+    </a>
+  </div>
+</div>
 
-        const bodyPayload = { collection_id: selectedCollections, query: message, top_k: 5 };
+      <div class="footer-col">
+        <strong>Contact</strong><br>
+        M/s Renew Consulting Engineers Pvt Ltd.<br>
+        Hallmark Building, Site no. 4C-315, 3rd floor,<br>
+        Banaswadi, Bengaluru-560043.<br>
+        <a href="mailto:renew@renewconsulting.in">renew@renewconsulting.in</a>
+      </div>
+    </div>
+    <div class="footer-copy">Copyright © Renew Consulting Engineers Pvt Ltd</div>
+  </footer>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script>
+  // ---- ELEMENT REFERENCES ----
+  const collectionDropdown = document.getElementById("collectionDropdown");
+  const pdfDropdown        = document.getElementById("pdfDropdown");
+  const chatBox            = document.getElementById("chatBox");
+  const userInput          = document.getElementById("userInput");
+  const pdfPreview         = document.getElementById("pdfPreview");
+  const pdfFilename        = document.getElementById("pdfFilename");
+  const pdfViewer          = document.getElementById("pdfViewer");
+  const footerEl           = document.getElementById("site-footer");
 
-        const response = await fetch("http://127.0.0.1:8017/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bodyPayload)
-        });
+  // ---- FOOTER VISIBILITY ----
+  function updateFooterFor(pageId) {
+    if (!footerEl) return;
+    const showOnHome = pageId === "frontpage-container";
+    footerEl.classList.toggle("hidden", !showOnHome);
+  }
 
-        const data = await response.json();
+  // ---- PAGE SWITCHING ----
+  function setHeaderFooter(visible) {
+    if (visible) document.body.classList.add('show-headerfooter');
+    else document.body.classList.remove('show-headerfooter');
+  }
 
-        if (data.answer) {
-          chatBox.innerHTML += `<div class="bot-message"><b>Bot:</b> ${data.answer}</div>`;
-        } else {
-          chatBox.innerHTML += `<div class="bot-message">No response from server.</div>`;
-        }
-
-        chatBox.scrollTop = chatBox.scrollHeight;
-      } catch (error) {
-        chatBox.innerHTML += `<div class="bot-message">Error: ${error.message}</div>`;
-      }
-    }
-
-    document.getElementById("userInput").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") sendMessage();
+  function showPage(pageId) {
+    const pages = ["frontpage-container", "login-container", "dashboard-container", "app-container"];
+    pages.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
     });
 
-    window.onload = function() {
-      loadCollections();
-      loadPDFLibrary();
-    };
-  </script>
+    if (pageId === "frontpage-container") {
+      setHeaderFooter(true);
+      document.getElementById("frontpage-container").style.display = "block";
+      document.getElementById("view-home").classList.add("active");
+      document.getElementById("view-features").classList.remove("active");
+      document.getElementById("view-aboutus").classList.remove("active");
+    } else {
+      setHeaderFooter(false);
+      if (pageId === "login-container") document.getElementById("login-container").style.display = "flex";
+      else if (pageId === "dashboard-container") document.getElementById("dashboard-container").style.display = "block";
+      else if (pageId === "app-container") document.getElementById("app-container").style.display = "flex";
+    }
+    updateFooterFor(pageId);
+  }
 
+  // ---- INITIAL ROUTER ----
+  (function initRouter() {
+    const VIEWS = {
+      home: document.getElementById('view-home'),
+      features: document.getElementById('view-features'),
+      aboutus: document.getElementById('view-aboutus')
+    };
+    function showOnly(key) {
+      Object.entries(VIEWS).forEach(([k, el]) => el && el.classList.toggle('active', k === key));
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+    function route() {
+      if (document.body.classList.contains('show-headerfooter')) {
+        const h = (location.hash || '#home').toLowerCase();
+        if (h.includes('features')) return showOnly('features');
+        if (h.includes('aboutus')) return showOnly('aboutus');
+        return showOnly('home');
+      }
+    }
+    window.addEventListener('hashchange', route);
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage('frontpage-container');
+      if (!location.hash) location.replace('#home');
+      route();
+    });
+  })();
+ let loggedIn = false;
+  // ---- LOGIN HANDLER ----
+  async function handleLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  if (!username || !password) {
+    alert("Please enter both username and password.");
+    return;
+  }
+  try {
+    const response = await fetch(`/api/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (data.success) {
+      loggedIn = true;
+      showPage("dashboard-container");
+      document.querySelector("#dashboard-container h1").textContent = "Welcome to MEP Engineering AI Tools";
+    } else {
+      alert("Invalid username or password.");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Server error during login.");
+  }
+}
+
+function openTool(tool) {
+  if (!loggedIn) {
+    alert("Please login to access this tool.");
+    showPage("login-container");
+    return;
+  }
+  
+  // Hide dashboard first
+  document.getElementById('dashboard-container').style.display = 'none';
+  
+  if (tool === 'chatbot') {
+    document.getElementById('app-container').style.display = 'flex';
+    document.getElementById('ductTool').style.display = 'none';
+    document.querySelector('.home-button').style.display = 'flex';
+    loadCollections();
+    loadPDFs();
+  } else if (tool === 'duct') {
+    document.getElementById('ductTool').style.display = 'block';
+    document.getElementById('app-container').style.display = 'none';
+    document.querySelector('.home-button').style.display = 'flex'; // Show home button for duct tool too
+  } else {
+    alert("Tool '" + tool + "' is not implemented yet.");
+    showDashboard(); // Use existing function instead of inline code
+  }
+}
+
+function showDashboard() {
+  document.getElementById("app-container").style.display = "none";
+  document.getElementById("dashboard-container").style.display = "block";
+  document.getElementById("ductTool").style.display = "none"; // Add this line
+  document.querySelector(".home-button").style.display = "none";
+}
+
+function backToDashboard() {
+  document.getElementById('ductTool').style.display = 'none';
+  if (document.getElementById('app-container')) document.getElementById('app-container').style.display = 'none';
+  document.getElementById('dashboard-container').style.display = 'block';
+  const homeBtn = document.querySelector('.home-button');
+  if (homeBtn) homeBtn.style.display = 'none';
+}
+
+function backToDashboard() {
+  showDashboard();
+}
+  function goToLogin() {
+    showPage("login-container");
+  }
+
+  // ---- COLLECTIONS ----
+  async function loadCollections() {
+    if (!collectionDropdown) return;
+    try {
+      collectionDropdown.innerHTML = `<option value="ALL">All Collections</option>`;
+      const response = await fetch(`/api/list-collections`);
+      const data = await response.json();
+      if (data.collections) {
+        data.collections.forEach(name => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          collectionDropdown.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error loading collections:", error);
+      collectionDropdown.innerHTML = `<option value="ALL">All Collections</option>`;
+    }
+  }
+
+  // ---- PDFs ----
+  async function loadPDFs() {
+    if (!pdfDropdown) return;
+    try {
+      pdfDropdown.innerHTML = `<option value="">Select a Standard PDF</option>`;
+      const response = await fetch(`/api/list-pdfs`);
+      const data = await response.json();
+      if (data.pdfs) {
+        data.pdfs.forEach(pdf => {
+          const option = document.createElement("option");
+          option.value = pdf;
+          option.textContent = pdf;
+          pdfDropdown.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error loading PDFs:", error);
+      pdfDropdown.innerHTML = `<option value="">Select a Standard PDF</option>`;
+    }
+  }
+
+  // ---- PDF PREVIEW ----
+  if (pdfDropdown) {
+    pdfDropdown.addEventListener("change", () => {
+      const selected = pdfDropdown.value;
+      if (selected) {
+        pdfPreview.classList.add("active");
+        pdfFilename.textContent = "Selected PDF: " + selected;
+        pdfViewer.src = `/pdfs/${selected}`;
+      } else {
+        pdfPreview.classList.remove("active");
+        pdfFilename.textContent = "No PDF selected";
+        pdfViewer.src = "";
+      }
+    });
+  }
+
+  // ---- CHAT ----
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    const selectedCollection = collectionDropdown.value;
+    if (!message) return;
+
+    const userMsg = document.createElement("div");
+    userMsg.className = "user-message";
+    userMsg.innerHTML = `<strong>You:</strong> ${message}`;
+    chatBox.appendChild(userMsg);
+
+    const typingMsg = document.createElement("div");
+    typingMsg.className = "bot-message";
+    typingMsg.id = "typing";
+    typingMsg.innerHTML = `<em>Typing...</em>`;
+    chatBox.appendChild(typingMsg);
+
+    userInput.value = "";
+
+    const selectedCollections =
+      selectedCollection === "ALL"
+        ? Array.from(collectionDropdown.options).map(opt => opt.value).filter(val => val !== "ALL")
+        : [selectedCollection];
+
+    try {
+      const response = await fetch(`/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          collection_id: selectedCollections,
+          query: message,
+          top_k: 5
+        })
+      });
+
+      const data = await response.json();
+      typingMsg.remove();
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot-message";
+      botMsg.innerHTML = `${data.answer || "No response received."}`;
+      chatBox.appendChild(botMsg);
+    } catch (error) {
+      typingMsg.remove();
+      const errMsg = document.createElement("div");
+      errMsg.className = "bot-message";
+      errMsg.innerHTML = `Error: ${error.message}`;
+      chatBox.appendChild(errMsg);
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // ---- ENTER KEY ----
+  if (userInput) {
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
+
+  // ---- INITIAL CHAT ROUTE ----
+  window.addEventListener("load", () => {
+    if (location.hash === "#chatbot") {
+      document.getElementById("dashboard-container").style.display = "none";
+      document.getElementById("app-container").style.display = "flex";
+      loadCollections();
+      loadPDFs();
+    }
+  });
+
+  // ---- EXPOSE ----
+  window.showPage       = showPage;
+  window.openTool       = openTool;
+  window.showDashboard  = showDashboard;
+  window.goToLogin      = goToLogin;
+  window.handleLogin    = handleLogin;
+  window.sendMessage    = sendMessage;
+  window.onload = () => { renderTable(); };
+
+
+// ==== Enhanced AI Duct Sizing Tool with Delete Rows Mode ====
+
+const fittingNumberMap = {
+  "Straight duct": 1,
+  "Y joint (L) CFM ratio 0.1": 2,
+  "Y joint (L) CFM ratio 0.2": 2.1,
+  "Y joint (L) CFM ratio 0.3": 2.2,
+  "Y joint (L) CFM ratio 0.4": 2.3,
+  "Y joint (L) CFM ratio 0.5": 2.4,
+  "Y joint (L) CFM ratio > 0.5": 2.5,
+  "Y Joint (B) CFM ratio 0.1": 3,
+  "Y Joint (B) CFM ratio 0.2": 3.1,
+  "Y Joint (B) CFM ratio 0.3": 3.2,
+  "Y Joint (B) CFM ratio 0.4": 3.3,
+  "Y Joint (B) CFM ratio > 0.4": 3.4,
+  "Reducer, lower size": 4,
+  "Diverging, Higher size": 4.1,
+  "Offset": 5,
+  "Plenum to duct transition": 6,
+  "90 deg elbow": 7,
+  "45 deg elbow": 7.1,
+  "Shoe collar, area ratio < 0.4": 8,
+  "Exhaust Louvers": 9,
+  "Fresh air Louvers": 10,
+  "FSD": 11,
+  "Opposed blade damper": 12,
+  "Splitter damper": 13,
+  "Hit & miss damper": 14,
+  "Slot diffusers": 15,
+  "Supply air grills": 16,
+  "Return air grills": 17,
+  "Square diffusers": 18,
+  "Circular diffusers": 19,
+  "Jet diffusers": 20,
+  "VAV till 4100 CFM": 21,
+  "VAV above 4100 CFM": 22,
+  "VCD 0 degree": 23,
+  "VCD 15 degree": 24,
+  "VCD 30 degree": 25,
+  "VCD 45 degree": 26,
+  "VCD 60 degree": 27,
+  "Circular damper 0 degree": 28,
+  "Circular damper 15 degree": 29,
+  "Circular damper 30 degree": 30,
+  "Circular damper 45 degree": 31,
+  "Perforated grills": 32,
+  "Floor grills": 33,
+  "Linear supply air grills": 34,
+  "Egg crate grills": 35,
+  "Swirl diffusers": 36,
+  "Plenum VCD, 0 degree": 37,
+  "Fan inlet L/H > 5": 38,
+  "Flexible duct": 41,
+  "Pre-filter": 42,
+  "Bag filter": 43,
+  "Hepa filter": 44,
+  "Coil 1 PD": 45,
+  "Coil 2 PD": 46,
+  "Coil 3 PD": 47,
+  "Coil 4 PD": 48,
+  "Coil 5 PD": 49,
+  "Miscl 1 PD": 50,
+  "Miscl 2 PD": 51,
+  "Miscl 3 PD": 52,
+};
+
+function createEmptyRow(index) {
+  return {
+    "Sl. No": index,
+    "Tag name": "",
+    "Type fitting": "",
+    "Fitting no": "",
+    "Flow rate, m3/hr": "",
+    "Length, M/No": 10.0,
+    "Nom. dia, mm": 400,
+    "Duct height, mm": 150,
+    "Duct width, mm": "",
+    "Eq dia, mm": "",
+    "Aspect ratio": "",
+    "Roughness in duct": "",
+    "Reynolds number in duct": "",
+    "Duct friction co-eff": "",
+    "Fitting K factor PDCF": "",
+    "Face velocity, m/s": "",
+    "Pressure drop, Pa/m": "",
+    "Pressure drop, Pa": "",
+    "Mark critical path c": "",
+    merged: false,
+    mergedFrom: null,
+    originalIndex: index,
+    isManualEdit: false
+  };
+}
+
+let rows = [createEmptyRow(1)];
+let mergeMode = false;
+let deleteMode = false;
+let selectedMergeRows = [];
+let selectedDeleteRows = [];
+let originalRowsBackup = null;
+const MAX_VELOCITY = 7.62;
+const MAX_PRESSURE_DROP = 0.64;
+
+// Add new row manually
+function addNewRow() {
+  rows.push(createEmptyRow(rows.length + 1));
+  renderTable();
+}
+
+// Ensure empty row at bottom automatically
+function ensureBottomEmptyRow() {
+  const last = rows[rows.length - 1];
+  if (!last || last["Tag name"] || last["Flow rate, m3/hr"] || last["Type fitting"]) {
+    rows.push(createEmptyRow(rows.length + 1));
+    setTimeout(() => renderTable(), 50);
+  }
+}
+
+// Column Resizing Functions (unchanged)
+function initColumnResize() {
+  const table = document.querySelector('.data-table');
+  if (!table) return;
+  
+  const headers = table.querySelectorAll('th');
+  headers.forEach((header, index) => {
+    if (index < headers.length - 1) {
+      header.style.position = 'relative';
+      header.addEventListener('mousedown', handleMouseDown);
+    }
+  });
+  
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+}
+
+function handleMouseDown(e) {
+  const rect = e.target.getBoundingClientRect();
+  const rightEdge = rect.right;
+  
+  if (e.clientX >= rightEdge - 6) {
+    isResizing = true;
+    currentResizeColumn = e.target;
+    startX = e.clientX;
+    startWidth = parseInt(window.getComputedStyle(currentResizeColumn).width);
+    
+    currentResizeColumn.classList.add('resizing');
+    document.querySelector('.data-table').classList.add('resizing');
+    
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+
+function handleMouseMove(e) {
+  if (!isResizing || !currentResizeColumn) return;
+  
+  const diff = e.clientX - startX;
+  const newWidth = Math.max(startWidth + diff, 50);
+  
+  const headers = Array.from(currentResizeColumn.parentNode.children);
+  const columnIndex = headers.indexOf(currentResizeColumn);
+  
+  currentResizeColumn.style.width = newWidth + 'px';
+  
+  const table = document.querySelector('.data-table');
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach(row => {
+    const cell = row.children[columnIndex];
+    if (cell) {
+      cell.style.width = newWidth + 'px';
+    }
+  });
+  
+  e.preventDefault();
+}
+
+function handleMouseUp(e) {
+  if (isResizing) {
+    isResizing = false;
+    
+    if (currentResizeColumn) {
+      currentResizeColumn.classList.remove('resizing');
+      currentResizeColumn = null;
+    }
+    
+    const table = document.querySelector('.data-table');
+    if (table) {
+      table.classList.remove('resizing');
+    }
+  }
+}
+
+// Core backend calculation function
+async function calculateRowsBackend(inputRows) {
+  try {
+    const response = await fetch("/api/duct/calculate_ducts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(inputRows)
+    });
+    if (!response.ok) throw new Error("Calculation API error");
+    return await response.json();
+  } catch (e) {
+    console.error(e);
+    alert("Failed to calculate duct sizing. Please try again.");
+    return null;
+  }
+}
+
+// Field update logic
+async function updateField(i, field, value) {
+  if (!rows[i] || (rows[i].merged && field !== 'Tag name')) return;
+
+  if (["Flow rate, m3/hr", "Nom. dia, mm", "Duct height, mm", "Length, M/No"].includes(field)) {
+    value = value === '' ? '' : parseFloat(value);
+    if (value !== '' && isNaN(value)) return;
+    if (value < 0) return;
+  }
+
+  if (["Flow rate, m3/hr", "Nom. dia, mm", "Duct height, mm"].includes(field)) {
+    rows[i].isManualEdit = true;
+  }
+  rows[i][field] = value;
+
+  if (field === "Type fitting") {
+    rows[i]["Fitting no"] = fittingNumberMap[value] || 1;
+  }
+
+  if (
+    rows[i]["Flow rate, m3/hr"] !== '' &&
+    rows[i]["Flow rate, m3/hr"] !== null &&
+    !isNaN(rows[i]["Flow rate, m3/hr"])
+  ) {
+    const inputRow = {
+      "Tag name": rows[i]["Tag name"] || "",
+      "Type fitting": rows[i]["Type fitting"] || "Straight duct",
+      "Flow rate, m3/hr": rows[i]["Flow rate, m3/hr"],
+      "Length, M/No": rows[i]["Length, M/No"] || 10,
+      "Nom. dia, mm": rows[i]["Nom. dia, mm"] || 400,
+      "Duct height, mm": rows[i]["Duct height, mm"] || 150,
+      "Duct type": 2
+    };
+    const result = await calculateRowsBackend([inputRow]);
+    if (result && result.length === 1) {
+      const updated = result[0];
+      if (!rows[i].isManualEdit || field !== "Nom. dia, mm")
+        rows[i]["Nom. dia, mm"] = updated["Nom. dia, mm"];
+      if (!rows[i].isManualEdit || field !== "Duct height, mm")
+        rows[i]["Duct height, mm"] = updated["Duct height, mm"];
+      [
+        "Length, M/No",
+        "Duct width, mm",
+        "Eq dia, mm",
+        "Aspect ratio",
+        "Roughness in duct",
+        "Reynolds number in duct",
+        "Duct friction co-eff",
+        "Fitting K factor PDCF",
+        "Face velocity, m/s",
+        "Pressure drop, Pa/m",
+        "Pressure drop, Pa",
+        "Mark critical path c"
+      ].forEach((k) => {
+        rows[i][k] = updated[k];
+      });
+    }
+  }
+
+  renderTable();
+
+  // Auto add empty row if needed
+  if (
+    i === rows.length - 1 &&
+    ((field === "Tag name" && value && value.trim() !== "") ||
+      (field === "Flow rate, m3/hr" && value !== "" && !isNaN(value)) ||
+      (field === "Type fitting" && value !== ""))
+  ) {
+    ensureBottomEmptyRow();
+  }
+}
+
+// Merge rows; keep originals, add merged row at end
+async function performMergeRows() {
+  if (selectedMergeRows.length < 2) return;
+
+  let rowsToMerge = selectedMergeRows.map((idx) => {
+    const r = rows[idx];
+    return {
+      "Tag name": r["Tag name"],
+      "Type fitting": r["Type fitting"] || "Straight duct",
+      "Flow rate, m3/hr": parseFloat(r["Flow rate, m3/hr"]) || 0,
+      "Length, M/No": parseFloat(r["Length, M/No"]) || 10,
+      "Nom. dia, mm": parseFloat(r["Nom. dia, mm"]) || 400,
+      "Duct height, mm": parseFloat(r["Duct height, mm"]) || 150,
+      "Duct type": 2
+    };
+  });
+
+  const mergedTagName = selectedMergeRows
+    .map((idx) => rows[idx]["Tag name"])
+    .filter(Boolean)
+    .join(" + ");
+
+  try {
+    const response = await fetch("/api/duct/merge_rows", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(rowsToMerge)
+    });
+    if (!response.ok) throw new Error("Merge failed");
+    const mergedRow = await response.json();
+
+    rows.push({
+      "Sl. No": rows.length + 1,
+      "Tag name": mergedTagName,
+      "Type fitting": mergedRow["Type fitting"],
+      "Fitting no": fittingNumberMap[mergedRow["Type fitting"]] || 1,
+      "Flow rate, m3/hr": mergedRow["Flow rate, m3/hr"],
+      "Length, M/No": mergedRow["Length, M/No"],
+      "Nom. dia, mm": mergedRow["Nom. dia, mm"],
+      "Duct height, mm": mergedRow["Duct height, mm"],
+      "Duct width, mm": mergedRow["Duct width, mm"],
+      "Eq dia, mm": mergedRow["Eq dia, mm"],
+      "Aspect ratio": mergedRow["Aspect ratio"],
+      "Roughness in duct": mergedRow["Roughness in duct"],
+      "Reynolds number in duct": mergedRow["Reynolds number in duct"],
+      "Duct friction co-eff": mergedRow["Duct friction co-eff"],
+      "Fitting K factor PDCF": mergedRow["Fitting K factor PDCF"],
+      "Face velocity, m/s": mergedRow["Face velocity, m/s"],
+      "Pressure drop, Pa/m": mergedRow["Pressure drop, Pa/m"],
+      "Pressure drop, Pa": mergedRow["Pressure drop, Pa"],
+      "Mark critical path c": mergedRow["Mark critical path c"],
+      merged: true,
+      mergedFrom: [...selectedMergeRows]
+    });
+
+    rows.forEach((row, idx) => {
+      row["Sl. No"] = idx + 1;
+    });
+
+    selectedMergeRows = [];
+    renderTable();
+    ensureBottomEmptyRow();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to merge rows.");
+  }
+}
+
+// Toggle merge mode UI and logic
+function toggleMerge() {
+  const button = document.getElementById("toggleMergeBtn");
+  if (!mergeMode) {
+    if (deleteMode) toggleDelete();
+    originalRowsBackup = JSON.parse(JSON.stringify(rows));
+    mergeMode = true;
+    selectedMergeRows = [];
+    button.textContent = "Disable Merge";
+    button.style.background = "#dc3545";
+    if (!document.getElementById("merge-info")) {
+      const infoText = document.createElement("p");
+      infoText.id = "merge-info";
+      infoText.textContent = "✓ MERGE MODE: Select 2+ rows with checkboxes to merge them.";
+      infoText.style =
+        "text-align:center;color:#000;font-weight:bold;font-size:1rem;";
+      document
+        .getElementById("ductTool")
+        .insertBefore(infoText, document.querySelector(".table-container"));
+    }
+  } else {
+    if (originalRowsBackup) {
+      rows = JSON.parse(JSON.stringify(originalRowsBackup));
+      rows.forEach((row, index) => {
+        row["Sl. No"] = index + 1;
+        row.merged = false;
+        row.mergedFrom = null;
+        row.isManualEdit = false;
+      });
+      originalRowsBackup = null;
+    }
+    mergeMode = false;
+    selectedMergeRows = [];
+    button.textContent = "Enable Merge";
+    button.style.background = "#17a2b8";
+    const infoText = document.getElementById("merge-info");
+    if (infoText) infoText.remove();
+  }
+  renderTable();
+}
+
+function onSelectMergeRow(checkbox) {
+  const idx = parseInt(checkbox.dataset.index, 10);
+  if (checkbox.checked) {
+    if (!selectedMergeRows.includes(idx)) selectedMergeRows.push(idx);
+  } else {
+    selectedMergeRows = selectedMergeRows.filter((i) => i !== idx);
+  }
+  if (selectedMergeRows.length >= 2) {
+    setTimeout(() => performMergeRows(), 100);
+  }
+}
+
+// Toggle delete mode UI and logic
+function toggleDelete() {
+  const button = document.getElementById("toggleDeleteBtn");
+  if (!deleteMode) {
+    if (mergeMode) {
+      toggleMerge();
+    }
+    deleteMode = true;
+    selectedDeleteRows = [];
+    button.textContent = "Delete Selected";
+    button.style.background = "#dc3545";
+    button.disabled = true;
+    if (!document.getElementById("delete-info")) {
+      const infoText = document.createElement("p");
+      infoText.id = "delete-info";
+      infoText.style.textAlign = "center";
+      infoText.style.color = "#000";
+      infoText.style.fontWeight = "bold";
+      infoText.style.fontSize = "1rem";
+      infoText.textContent = "⚠️ DELETE MODE: Select rows with checkboxes to delete them.";
+      document
+        .getElementById("ductTool")
+        .insertBefore(infoText, document.querySelector(".table-container"));
+    }
+  } else {
+    deleteMode = false;
+    selectedDeleteRows = [];
+    button.textContent = "Delete Rows";
+    button.style.background = "#6c757d";
+    button.disabled = false;
+    const infoText = document.getElementById("delete-info");
+    if (infoText) infoText.remove();
+  }
+  renderTable();
+}
+
+function onSelectDeleteRow(checkbox) {
+  const idx = parseInt(checkbox.dataset.index, 10);
+  if (checkbox.checked) {
+    if (!selectedDeleteRows.includes(idx)) selectedDeleteRows.push(idx);
+  } else {
+    selectedDeleteRows = selectedDeleteRows.filter((i) => i !== idx);
+  }
+  const deleteButton = document.getElementById("toggleDeleteBtn");
+  if (selectedDeleteRows.length > 0) {
+    deleteButton.disabled = false;
+    deleteButton.textContent = `Delete Selected (${selectedDeleteRows.length})`;
+    deleteButton.onclick = performDeleteRows;
+  } else {
+    deleteButton.disabled = true;
+    deleteButton.textContent = "Delete Selected";
+    deleteButton.onclick = null;
+  }
+}
+
+function performDeleteRows() {
+  if (selectedDeleteRows.length === 0) return;
+  const rowNumbers = selectedDeleteRows.map((i) => i + 1).join(", ");
+  if (!confirm(`Are you sure you want to delete rows: ${rowNumbers}?`)) {
+    return;
+  }
+  selectedDeleteRows.sort((a, b) => b - a);
+  selectedDeleteRows.forEach((idx) => {
+    rows.splice(idx, 1);
+  });
+  if (rows.length === 0) {
+    rows = [createEmptyRow(1)];
+  }
+  rows.forEach((row, i) => {
+    row["Sl. No"] = i + 1;
+  });
+  toggleDelete();
+}
+
+async function uploadFile() {
+  const fileInput = document.getElementById("fileUpload");
+  if (!fileInput.files.length) {
+    alert("Please select a file to upload.");
+    return;
+  }
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch("/api/duct/upload_file", {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+    if (result.error) {
+      alert("Upload error: " + result.error);
+      return;
+    }
+    if (result.results && Array.isArray(result.results)) {
+      rows = result.results.map((row, idx) => ({
+        ...createEmptyRow(idx + 1),
+        ...row,
+        "Sl. No": idx + 1,
+        isManualEdit: false,
+      }));
+      if (rows.length === 0) rows = [createEmptyRow(1)];
+      renderTable();
+      alert("File uploaded successfully! Calculations applied.");
+    } else {
+      alert("Upload succeeded but no data parsed.");
+      rows = [createEmptyRow(1)];
+      renderTable();
+    }
+  } catch (err) {
+    console.error("Upload failed:", err);
+    alert("Failed to upload and process file.");
+  }
+}
+
+function downloadExcel() {
+  if (typeof XLSX === "undefined") {
+    alert("SheetJS/XLSX library not loaded!");
+    return;
+  }
+
+  const cleanRows = rows.filter(
+    (row) =>
+      row["Tag name"] &&
+      row["Tag name"].trim() !== "" &&
+      row["Flow rate, m3/hr"] &&
+      row["Flow rate, m3/hr"] !== ""
+  );
+
+  const worksheetData = cleanRows.map((row, index) => ({
+    "Sl. No": index + 1,
+    "Tag name": row["Tag name"],
+    "Type fitting": row["Type fitting"],
+    "Fitting no": row["Fitting no"],
+    "Flow rate, m3/hr": row["Flow rate, m3/hr"],
+    "Length, M/No": row["Length, M/No"],
+    "Nom. dia, mm": row["Nom. dia, mm"],
+    "Duct height, mm": row["Duct height, mm"],
+    "Duct width, mm": row["Duct width, mm"],
+    "Eq dia, mm": row["Eq dia, mm"],
+    "Aspect ratio": row["Aspect ratio"],
+    "Roughness in duct": row["Roughness in duct"],
+    "Reynolds number in duct": row["Reynolds number in duct"],
+    "Duct friction co-eff": row["Duct friction co-eff"],
+    "Fitting K factor PDCF": row["Fitting K factor PDCF"],
+    "Face velocity, m/s": row["Face velocity, m/s"],
+    "Pressure drop, Pa/m": row["Pressure drop, Pa/m"],
+    "Pressure drop, Pa": row["Pressure drop, Pa"],
+    "Mark critical path c": row["Mark critical path c"],
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "DuctSizing");
+  XLSX.writeFile(workbook, "duct_sizing_results.xlsx");
+}
+
+function downloadPdf() {
+  if (typeof window.jspdf === "undefined") {
+    alert("jsPDF library not loaded!");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("l", "mm", "a4");
+
+  const cleanRows = rows.filter(
+    (row) =>
+      row["Tag name"] &&
+      row["Tag name"].trim() !== "" &&
+      row["Flow rate, m3/hr"] &&
+      row["Flow rate, m3/hr"] !== ""
+  );
+
+  const columns = [
+    "Sl. No",
+    "Tag name",
+    "Type fitting",
+    "Flow rate, m3/hr",
+    "Length, M/No",
+    "Nom. dia, mm",
+    "Duct height, mm",
+    "Duct width, mm",
+    "Face velocity, m/s",
+    "Pressure drop, Pa/m",
+    "Pressure drop, Pa",
+  ];
+
+  const rowsData = cleanRows.map((r, index) => [
+    index + 1,
+    r["Tag name"],
+    r["Type fitting"],
+    r["Flow rate, m3/hr"],
+    r["Length, M/No"],
+    r["Nom. dia, mm"],
+    r["Duct height, mm"],
+    r["Duct width, mm"],
+    r["Face velocity, m/s"],
+    r["Pressure drop, Pa/m"],
+    r["Pressure drop, Pa"],
+  ]);
+
+  doc.autoTable({
+    startY: 20,
+    head: [columns],
+    body: rowsData,
+    styles: { fontSize: 8 },
+    headStyles: { fillColor: "#eb8108", textColor: "#000000" },
+  });
+  doc.save("duct_sizing_results.pdf");
+}
+
+function backToDashboard() {
+  document.getElementById("ductTool").style.display = "none";
+  if (document.getElementById("app-container"))
+    document.getElementById("app-container").style.display = "none";
+  if (document.getElementById("dashboard-container"))
+    document.getElementById("dashboard-container").style.display = "block";
+  const homeBtn = document.querySelector(".home-button");
+  if (homeBtn) homeBtn.style.display = "none";
+}
+
+function renderTable() {
+  const tbody = document.getElementById("tableBody");
+  if (!tbody) {
+    console.error("Table body not found");
+    return;
+  }
+  tbody.innerHTML = "";
+  rows.forEach((row, i) => {
+    const fittingOptionsHtml = Object.keys(fittingNumberMap)
+      .map(
+        (opt) =>
+          `<option value="${opt}"${
+            row["Type fitting"] === opt ? " selected" : ""
+          }>${opt}</option>`
+      )
+      .join("");
+    const trClass = row.merged ? "merged-row" : "";
+    let slNoCellHtml = `<span>${row["Sl. No"]}</span>`;
+    if (mergeMode && row["Tag name"] && row["Tag name"].trim() !== "") {
+      const checkboxStyle = "margin-left: 5px; transform: scale(1.2);";
+      slNoCellHtml += ` <input type="checkbox" class="merge-checkbox" data-index="${i}" ${
+        selectedMergeRows.includes(i) ? "checked" : ""
+      } onchange="onSelectMergeRow(this)" style="${checkboxStyle}" title="Select for merging">`;
+    }
+    if (deleteMode && row["Tag name"] && row["Tag name"].trim() !== "") {
+      const checkboxStyle =
+        "margin-left: 5px; transform: scale(1.2); accent-color: #dc3545;";
+      slNoCellHtml += ` <input type="checkbox" class="delete-checkbox" data-index="${i}" ${
+        selectedDeleteRows.includes(i) ? "checked" : ""
+      } onchange="onSelectDeleteRow(this)" style="${checkboxStyle}" title="Select for deletion">`;
+    }
+    let mergeInfo = "";
+    if (row.merged && row.mergedFrom) {
+      const sourceRows = row.mergedFrom.map((idx) => idx + 1).join(", ");
+      mergeInfo = ` <small style="color: #28a745; font-weight: bold;">[From: ${sourceRows}]</small>`;
+    }
+    const isReadonly = row.merged;
+    const mergedClass = row.merged
+      ? `style="background: linear-gradient(135deg, #e8f5e8, #d4edda); font-weight: bold;"`
+      : "";
+    const velocityCritical = parseFloat(row["Face velocity, m/s"]) > MAX_VELOCITY;
+    const pressureCritical =
+      parseFloat(row["Pressure drop, Pa/m"]) > MAX_PRESSURE_DROP;
+    tbody.insertAdjacentHTML(
+      "beforeend",
+      `
+      <tr class="${trClass}" ${mergedClass}>
+        <td class="sl-no-cell">${slNoCellHtml}${mergeInfo}</td>
+        <td><input type="text" class="editableinput tagname-input" value="${
+          row["Tag name"] || ""
+        }" onchange="updateField(${i}, 'Tag name', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Enter tag name" /></td>
+        <td><select class="editableinput" onchange="updateField(${i}, 'Type fitting', this.value)" ${
+          isReadonly ? "disabled" : ""
+        }><option value="">Select...</option>${fittingOptionsHtml}</select></td>
+        <td class="auto-calc">${row["Fitting no"] || ""}</td>
+        <td><input type="number" class="editableinput" min="0" step="any" value="${
+          row["Flow rate, m3/hr"] || ""
+        }" onchange="updateField(${i}, 'Flow rate, m3/hr', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Flow rate" /></td>
+        <td><input type="number" class="editableinput" min="0" step="0.1" value="${
+          row["Length, M/No"] || 10
+        }" onchange="updateField(${i}, 'Length, M/No', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } /></td>
+        <td><input type="number" class="editableinput override-field" min="0" step="25" value="${
+          row["Nom. dia, mm"] || 400
+        }" onchange="updateField(${i}, 'Nom. dia, mm', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Override" title="Manual override available" /></td>
+        <td><input type="number" class="editableinput override-field" min="0" step="25" value="${
+          row["Duct height, mm"] || 150
+        }" onchange="updateField(${i}, 'Duct height, mm', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Override" title="Manual override available" /></td>
+        <td class="auto-calc">${row["Duct width, mm"] || ""}</td>
+        <td class="auto-calc">${row["Eq dia, mm"] || ""}</td>
+        <td class="auto-calc">${row["Aspect ratio"] || ""}</td>
+        <td class="auto-calc">${row["Roughness in duct"] || ""}</td>
+        <td class="auto-calc">${row["Reynolds number in duct"] || ""}</td>
+        <td class="auto-calc">${row["Duct friction co-eff"] || ""}</td>
+        <td class="auto-calc">${row["Fitting K factor PDCF"] || ""}</td>
+        <td class="target-value ${
+          velocityCritical ? "critical-highlight" : ""
+        }">${row["Face velocity, m/s"] || ""}</td>
+        <td class="target-value ${
+          pressureCritical ? "critical-highlight" : ""
+        }">${row["Pressure drop, Pa/m"] || ""}</td>
+        <td class="auto-calc">${row["Pressure drop, Pa"] || ""}</td>
+        <td class="auto-calc">${row["Mark critical path c"] || ""}</td>
+      </tr>
+    `
+    );
+  });
+  setTimeout(() => {
+    if (typeof initColumnResize === "function") initColumnResize();
+  }, 100);
+}
+
+// Init render on DOM load
+document.addEventListener("DOMContentLoaded", function () {
+  renderTable();
+});
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", renderTable);
+} else {
+  renderTable();
+}
+function addNewPage() {
+  if (!confirm("Add new page? This will clear current data.")) return;
+  rows = [createEmptyRow(1)];
+  mergeMode = false;
+  deleteMode = false;
+  selectedMergeRows = [];
+  selectedDeleteRows = [];
+  originalRowsBackup = null;
+  renderTable();
+}
+
+</script>
 </body>
 </html>
