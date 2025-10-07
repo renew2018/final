@@ -307,6 +307,17 @@ footer.site-footer {
   flex-direction: column;
   position: relative;
 }
+
+/* Override form styles specifically in login */
+#login-container form {
+  background: none !important;
+  box-shadow: none !important;
+  max-width: 500px;
+  padding: 0 !important;
+  margin: 20px auto !important;
+  text-align: center;
+}
+
 .login-box {
   background: linear-gradient(to bottom, 
     #a6a6a6 15%, 
@@ -319,12 +330,14 @@ footer.site-footer {
   text-align: center;
   animation: fadeIn 0.6s ease-in-out;
 }
+
 .login-box h2 { 
   margin-bottom: 10px; 
   font-size: 1cm; 
   font-family: "Cinzel Decorative", serif; 
   color: #ffffff; 
 }
+
 .login-box .subtitle { 
   margin-bottom: 25px; 
   font-size: 0.52cm; 
@@ -332,6 +345,7 @@ footer.site-footer {
   color: #181818; 
   font-weight: bold; 
 }
+
 .login-box input {
   width: 100%; 
   padding: 13px; 
@@ -343,9 +357,11 @@ footer.site-footer {
   font-family:'Times New Roman', Times, serif; 
   transition: border-color 0.3s; 
 }
+
 .login-box input:focus { 
   border-color: #080808; 
 }
+
 .login-box .login-btn {
   width: 50%; 
   padding: 15px; 
@@ -361,16 +377,19 @@ footer.site-footer {
   font-weight: 600; 
   transition: background 0.3s;
 }
+
 .login-box .login-btn:hover { 
   background: #3e3f41; 
 }
+
 .divider { 
   margin: 20px 0; 
   font-size: 16px; 
-  font-family:'kite one', serif; 
+  font-family:'Kite One', serif; 
   color: #000000; 
   position: relative; 
 }
+
 .divider::before,
 .divider::after { 
   content: ""; 
@@ -380,8 +399,10 @@ footer.site-footer {
   height: 1px; 
   background: #7c7979;
 }
+
 .divider::before { left: 0; }
 .divider::after { right: 0; }
+
 .google-btn { 
   width: 100%; 
   padding: 15px; 
@@ -395,8 +416,42 @@ footer.site-footer {
   transition: all 0.3s; 
   font-weight: bold; 
 }
+
 .google-btn:hover { 
   background: #f3f4f6; 
+}
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1.5px solid #222;         /* Slightly darker, more visible border */
+  border-radius: 12px;              /* Smooth rounded corners */
+  outline: none;
+  font-size: 22px;
+  font-family: 'Times New Roman', Times, serif;
+  transition: border-color 0.3s;
+  box-sizing: border-box;           /* Ensures padding works as expected */
+  background: #fff;
+  color: #555;
+}
+
+/* Optional: Add a slight inset shadow for depth */
+.login-box input[type="text"]:focus,
+.login-box input[type="password"]:focus {
+  border-color: #080808;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07); /* subtle focus shadow */
+}
+/* ==== Animations ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==== Dashboard ==== */
