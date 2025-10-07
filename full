@@ -1,0 +1,3610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Design.py</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Carter+One&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      background: #e9e9e9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+   #main-header, #site-footer { 
+  display: none; 
+}
+body.show-headerfooter #main-header,
+body.show-headerfooter #site-footer {
+  display: flex;
+}
+
+/* Header styles */
+.header-bar {
+  position: fixed;
+  font-size: 0.5cm;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 105px;
+  width: 100%; /* fixed */
+  background: #ffffff; /* fixed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtle shadow */
+}
+.brand-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.2;
+}
+.brand-left img {
+  width: 120px; /* increased logo size */
+  height: auto;
+  margin-bottom: 5px;
+}
+.brand-left .provided-by {
+  font-size: 0.95em;
+  color: #222;
+  margin-top: 1px;
+}
+.brand-left .orange {
+  color: #ff5100;
+  font-weight: 700;
+}
+nav.top-nav ul {
+  display: flex;
+  gap: 1.5em; /* more spacing between links */
+  list-style: none;
+  font-weight: 600;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+nav.top-nav a {
+  color: #000;
+  text-decoration: none;
+  padding: 6px 10px; /* larger clickable area */
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+nav.top-nav a:hover,
+nav.top-nav a:focus,
+nav.top-nav a.active {
+  border-bottom-color: #ff5100;
+  color: #ff5100; /* color change on hover */
+}
+
+/* Footer styles */
+footer.site-footer {
+  width: 100%;
+  background: #fff; 
+  color: #111; 
+  border-top: 1px solid #cfcfcf;
+  padding: 18px 4vw 14px; 
+  position: relative;
+  margin-top: auto; 
+  z-index: 500;
+  display: flex; 
+  flex-direction: column;
+}
+.footer-grid {
+  display: grid; 
+  gap: 14px; 
+  align-items: start;
+  grid-template-columns: 1fr 2fr 1.3fr;
+  max-width: 1200px; 
+  margin: 0 auto;
+}
+/* UPDATED CENTER COLUMN */
+.footer-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      
+  justify-content: center;
+  text-align: center;
+  justify-self: center; /* center entire column */
+}
+.footer-mid strong {
+  margin-bottom: 8px;
+  font-size: 0.5cm;
+  display: block;
+}
+.footer-mid > div {
+  text-align: center;
+  margin-bottom: 8px;
+}
+/* Social icons */
+.footer-social {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: transparent;
+  transition: box-shadow 0.18s, transform 0.16s;
+}
+.footer-social a.yt:hover {
+  background: #cc0000;
+  box-shadow: 0 2px 7px rgba(204,0,0,0.20);
+  transform: scale(1.08);
+}
+.footer-social a.li:hover {
+  background: #0a66c2;
+  box-shadow: 0 2px 7px rgba(10,102,194,0.18);
+  transform: scale(1.08);
+}
+.footer-social svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #fff;
+}
+/* END UPDATED CENTER COLUMN */
+.footer-col ul { 
+  list-style: none;
+  font-size: 0.5cm; 
+  text-align: left; 
+}
+.footer-col a { 
+  color: #111; 
+  text-decoration: none; 
+}
+.footer-col a:hover { 
+  text-decoration: underline;  
+}
+.footer-mid strong { 
+  display: block; 
+  margin-bottom: 6px; 
+}
+.footer-copy { 
+  max-width: 1200px; 
+  margin: 14px auto 0; 
+  border-top: 1px solid #cfcfcf; 
+  padding-top: 8px; 
+  text-align: center; 
+  font-size: .92em; 
+}
+@media (max-width: 900px) {
+  .footer-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .hero h1 { 
+    font-size: 1cm; 
+  }
+}
+.footer-grid {
+  display: grid;
+  gap: 30px;
+  align-items: start;
+  grid-template-columns: 1fr 2fr 1fr; /* center wider */
+  max-width: 1800px;
+  margin: 0 auto;
+}
+/* Left column (menu links) */
+.footer-col:first-child {
+  text-align: right; /* align text */
+  justify-self: start;
+}
+/* Right column (contact details) */
+.footer-col:last-child {
+  font-size: 0.47cm;
+  text-align: start; /* contact info alignment */
+  justify-self: right; /* keep on right */
+}
+
+/* Frontpage */
+#frontpage-container { 
+  display: none; 
+  flex: 1; 
+  flex-direction: column; 
+  align-items: center; 
+}
+.hero {
+  min-height: calc(100vh - 64px);
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+  gap: 16px; 
+  text-align: center;
+  padding: 40px 20px;
+  width: 100%;
+  background: linear-gradient(to bottom, #ffffff 50%, #797775 100%);
+  border-bottom: none;
+  margin-top: 64px;
+}
+.hero h1 { 
+  font-size: 2cm; 
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 700; 
+  color: #222; 
+  line-height: 1.25;
+}
+.hero .tag {
+  font-family: 'Carter One', normal;
+  max-width: 1400px;
+  margin: 0 auto 40px auto;  /* bottom margin */
+  color: #2a2a2a;
+  font-size: 0.9cm;
+  font-weight: normal;
+  margin-top: 20px;
+}
+.btn {
+  display: inline-block;
+  padding: 18px 30px;
+  border-radius: 25px;
+  border: 0;
+  cursor: pointer;
+  background: #363535;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  transition: transform .15s ease, background .25s ease;
+  margin-top: 20px;  /* breathing space */
+}
+.btn:hover,
+.btn:focus {
+  background: #222;
+  transform: scale(1.08);
+}
+
+.section-wrap { 
+  max-width: 1024px; 
+  width: 96%; 
+  margin: 26px auto; 
+}
+.section-wrap h2 {
+  font-size: 1cm; 
+  font-weight: 700; 
+  margin-bottom: 12px;
+}
+.section-wrap ul { 
+  padding-left: 18px; 
+}
+.section-wrap li {
+  font-size: 0.6cm;
+  width: 100%; /* full width */
+  margin-bottom: 10px;
+  line-height: 1.62;
+  max-width: none; /* override max */
+}
+.view { 
+  display: none; 
+}
+.view.active { 
+  display: block; 
+}
+/* ==== Login ==== */
+#login-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #9c9c9c, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+.login-box {
+  background: linear-gradient(to bottom, 
+    #a6a6a6 15%, 
+    #ffffff 100%);
+  padding: 70px; /* more inner spacing */
+  border-radius: 50px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+  width: 500px; /* increased width */
+  height: 550px; /* increased height */
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+.login-box h2 { 
+  margin-bottom: 10px; 
+  font-size: 1cm; 
+  font-family: "Cinzel Decorative", serif; 
+  color: #ffffff; 
+}
+.login-box .subtitle { 
+  margin-bottom: 25px; 
+  font-size: 0.52cm; 
+  font-family: "Cinzel Decorative", serif; 
+  color: #181818; 
+  font-weight: bold; 
+}
+.login-box input {
+  width: 100%; 
+  padding: 13px; 
+  margin: 10px 0; 
+  border: 1px solid #000000; 
+  border-radius: 10px;
+  outline: none; 
+  font-size: 22px; 
+  font-family:'Times New Roman', Times, serif; 
+  transition: border-color 0.3s; 
+}
+.login-box input:focus { 
+  border-color: #080808; 
+}
+.login-box .login-btn {
+  width: 50%; 
+  padding: 15px; 
+  margin: 15px auto 0; 
+  display: block; 
+  background: #3f3f41; 
+  color: #fff; 
+  border: none; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-size: 22px; 
+  font-family:'Times New Roman', Times, serif; 
+  font-weight: 600; 
+  transition: background 0.3s;
+}
+.login-box .login-btn:hover { 
+  background: #3e3f41; 
+}
+.divider { 
+  margin: 20px 0; 
+  font-size: 16px; 
+  font-family:'kite one', serif; 
+  color: #000000; 
+  position: relative; 
+}
+.divider::before,
+.divider::after { 
+  content: ""; 
+  position: absolute; 
+  top: 50%; 
+  width: 40%; 
+  height: 1px; 
+  background: #7c7979;
+}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+.google-btn { 
+  width: 100%; 
+  padding: 15px; 
+  background: #fff; 
+  color: #444; 
+  border: 1px solid #000000; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  font-size: 22px; 
+  font-family:'Times New Roman', Times, serif; 
+  transition: all 0.3s; 
+  font-weight: bold; 
+}
+.google-btn:hover { 
+  background: #f3f4f6; 
+}
+
+/* ==== Dashboard ==== */
+#dashboard-container {
+  text-align: center;
+  background: linear-gradient(to bottom, #9c9c9c, #ffffff);
+  padding: 60px 20px;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+#dashboard-container h1 {
+  font-family: "Cinzel Decorative", normal;
+  font-size: 1.1cm;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #000000;
+  text-shadow: #ffffff;
+  word-spacing: 3px;
+}
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
+}
+.tool-card {
+  background: #a6a6a6;
+  color: #000000;
+  border-radius: 25px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Times New Roman', Times, serif;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  width: 250px;
+  height: 200px;
+  box-shadow: none;
+  border: 3px solid #494949;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+  padding: 0;
+}
+.tool-card.hovered,
+.tool-card.active {
+  background: linear-gradient(to bottom, #ffffff 50%, #887f76 100%);
+  box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.9);
+  transform: scale(1.08);
+  z-index: 10;
+}
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
+  background: transparent;
+  display: block;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+  transform-origin: center;
+}
+.tool-card.hovered .card-img,
+.tool-card.active .card-img {
+  transform: scale(1.05);
+}
+@media (max-width: 990px) {
+  .tool-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+  }
+}
+@media (max-width: 660px) {
+  .tool-grid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+  .tool-card {
+    width: 90vw;
+    font-size: 18px;
+    height: 120px;
+  }
+  #dashboard-container h1 {
+    font-size: 0.8cm;
+  }
+}
+
+/* ==== Chat ==== */
+#app-container {
+  display: none;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* ==== Header ==== */
+#app-container header {
+  background: linear-gradient(to bottom, #534e4e, #666666);
+  border: 1px solid #000000;
+  color: rgb(240, 238, 238);
+  padding: 16px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Edo', cursive;
+  text-shadow: 1px 1px 1px #000000;
+  cursor: pointer;
+  user-select: none;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==== Main Container ==== */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+  margin-right: 320px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ==== Sidebar ==== */
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #b3b3b3, #ffffff);
+  border: 1px solid #000000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid #2a2a2a;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 15px;
+  overflow-y: auto;
+}
+
+/* ==== Dropdown Styles ==== */
+.dropdowns label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+}
+.dropdowns select {
+  width: 100%;
+  font-size: 16px;
+  height: 50px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  font-family: 'Times New Roman', serif;
+  background-color: #f7f7f7;
+  color: #222;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.dropdowns select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+.dropdowns select:hover {
+  border-color: #666;
+}
+
+/* ==== Chat Section ==== */
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+/* ==== Chat Box ==== */
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+/* ==== Input Area ==== */
+.input-area {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+.input-area input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-area input:focus {
+  outline: none;
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+.input-area button {
+  background-color: #2a2a2b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.1s;
+  min-width: 80px;
+}
+.input-area button:hover {
+  background-color: #545455;
+  transform: translateY(-1px);
+}
+.input-area button:active {
+  transform: translateY(0);
+}
+/* ==== PDF Preview ==== */
+.pdf-preview {
+  width: 0;
+  overflow: hidden;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+  border-left: 1px solid #ccc;
+  padding: 0;
+}
+.pdf-preview.active {
+  width: 65%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* ==== Home Button ==== */
+.home-button {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #424141;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ccc4c4;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+.home-button:hover {
+  background-color: #000;
+  transform: translateX(-50%) scale(1.1);
+  color: #fff;
+}
+/* ==== Animations ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ==== Chat Messages ==== */
+.user-message, .bot-message {
+  margin: 10px 0;
+  padding: 5px 0;
+  border-radius: 0;
+  background: none;
+  white-space: pre-wrap;
+  max-width: 100%;
+  line-height: 1.5;
+  font-size: 14px;
+  color: #181818;
+}
+.user-message {
+  font-weight: bold;
+  text-align: right;
+  font-family: 'Times New Roman', cursive;
+}
+.bot-message {
+  text-align: left;
+  font-family: 'Times New Roman', serif;
+}
+/* ==== Responsive Design ==== */
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
+    flex-direction: column;
+  }
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+  }
+  .chat-section {
+    padding: 15px;
+  }
+  .home-button {
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+/* ==== Scrollbar Styling ==== */
+.chat-box::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-box::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.chat-box::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+.chat-box::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+/* AI Duct Sizing Tool styles */
+/* ==== Full Width Table Container ====  */
+#ductTool {
+  display: none;
+  padding: 15px;
+  background: #ececec !important; /* Light grey background */
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+/* ==== Table Container without Horizontal Scroll ==== */
+.table-container {
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  height: 75vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  background: white;
+  position: relative;
+}
+/* ==== Resizable Data Table ==== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.85rem;
+  table-layout: fixed; /* CRITICAL: Fixed layout for resizable columns */
+  position: relative;
+}
+/* ==== Column Headers with Resize Handles ==== */
+.data-table th {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  background: linear-gradient(135deg, #eb8108, #d67207);
+  color: #000;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ==== Resize Handle for Column Headers ==== */
+.data-table th::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 15;
+  border-right: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.data-table th:hover::after {
+  border-right-color: rgba(255, 255, 255, 0.6);
+}
+.data-table th.resizing::after {
+  border-right-color: #fff;
+  background: rgba(255, 255, 255, 0.3);
+}
+/* ==== Default Column Widths (Resizable) ==== */
+.data-table th:nth-child(1) { width: 60px; min-width: 50px; }
+.data-table th:nth-child(2) { width: 200px; min-width: 120px; }
+.data-table th:nth-child(3) { width: 140px; min-width: 100px; }
+.data-table th:nth-child(4) { width: 80px; min-width: 60px; }
+.data-table th:nth-child(5) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(6) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(7) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(8) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(9) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(10) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(11) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(12) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(13) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(14) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(15) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(16) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(17) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(18) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(19) { width: 120px; min-width: 100px; }
+/* ==== Table Cells ==== */
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ==== Input Field Sizing ==== */
+.editableinput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  height: 26px;
+  background: transparent;
+}
+.tagname-input {
+  min-width: 100px !important;
+}
+/* ==== Actions Button Container ==== */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  background: #ececec !important; /* Adds gray strip behind the buttons */
+}
+.actions button,
+.actions label[role="button"] {
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  min-width: 120px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.actions button:hover,
+.actions label[role="button"]:hover {
+  background: #333 !important;
+  transform: translateY(-1px);
+}
+/* ==== Title Styling ==== */
+#ductTool h2 {
+  font-family: 'Carter One', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+/* ==== Visual Indicators ==== */
+.auto-calc {
+  background-color: #f8f9fa !important;
+  color: #666 !important;
+  font-weight: 500;
+}
+.target-value {
+  background-color: #e3f2fd !important;
+  font-weight: bold !important;
+}
+.override-field {
+  border: 2px dashed #ec7310ec !important;
+}
+.highlight {
+  background: linear-gradient(135deg, #ffe1e1, #ffd6d6) !important;
+  color: #b30000 !important;
+  font-weight: 600 !important;
+}
+.merged-row {
+  background: linear-gradient(135deg, #e8f5e8, #d4edda) !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  border-left: 4px solid #ffffff !important;
+}
+/* ==== Responsive Adjustments ==== */
+@media (max-width: 1200px) {
+  .data-table th, .data-table td {
+    font-size: 0.8rem;
+    padding: 5px 6px;
+  }
+}
+@media (max-width: 768px) {
+  #ductTool {
+    padding: 10px;
+  }
+  .table-container {
+    max-width: calc(100vw - 20px);
+    height: 70vh;
+  }
+  .actions {
+    gap: 8px;
+  }
+  .actions button, .actions label[role="button"] {
+    min-width: 100px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+/* ==== Column Resize Cursor ==== */
+.data-table.resizing {
+  cursor: col-resize;
+}
+.data-table.resizing * {
+  cursor: col-resize !important;
+}
+.critical-highlight {
+  color: red;
+  font-weight: bold;
+}
+
+/* Cable Schedule Tool Container */
+#cableScheduleTool {
+  display: none; /* Hidden by default */
+  padding: 15px;
+  background: #f7f9fc !important;
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Table Container */
+.table-container {
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  height: 75vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  background: white;
+  position: relative;
+}
+
+/* Data Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.85rem;
+  table-layout: fixed;
+  position: relative;
+}
+
+/* Table Header */
+.data-table th {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  background: linear-gradient(135deg, #f36f18);
+  color: #000000;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+  position: relative;
+}
+
+/* Resize Handle */
+.data-table th::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 15;
+  border-right: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.data-table th:hover::after {
+  border-right-color: rgba(255, 255, 255, 0.75);
+}
+
+.data-table th.resizing::after {
+  border-right-color: #fff;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Column Widths */
+.data-table th:nth-child(1) { width: 60px; min-width: 50px; }
+.data-table th:nth-child(2) { width: 140px; min-width: 120px; }
+.data-table th:nth-child(3) { width: 160px; min-width: 140px; }
+.data-table th:nth-child(4) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(5) { width: 120px; min-width: 110px; }
+.data-table th:nth-child(6) { width: 110px; min-width: 100px; }
+.data-table th:nth-child(7) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(8) { width: 100px; min-width: 90px; }
+.data-table th:nth-child(9) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(10) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(11) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(12) { width: 100px; min-width: 80px; }
+.data-table th:nth-child(13) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(14) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(15) { width: 130px; min-width: 120px; }
+.data-table th:nth-child(16) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(17) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(18) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(19) { width: 130px; min-width: 115px; }
+.data-table th:nth-child(20) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(21) { width: 150px; min-width: 130px; }
+
+/* Table Data Cells */
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Editable Inputs */
+.editableinput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  height: 28px;
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+.editableinput:focus {
+  border-color: #1f1e1e;
+  outline: none;
+  background: #e9f0ff;
+}
+
+/* Actions Container */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  background: #f1f4f8 !important;
+  border-radius: 6px;
+}
+
+/* Buttons and Label Buttons */
+.actions button,
+.actions label[role="button"] {
+  background: #0c0c0c !important;
+  color: white !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  min-width: 130px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.actions button:hover,
+.actions label[role="button"]:hover,
+.actions button:focus-visible,
+.actions label[role="button"]:focus-visible {
+  background: #77797c !important;
+  transform: translateY(-1px);
+  outline: 2px solid #555;
+  outline-offset: 2px;
+}
+
+/* Disabled Button */
+.actions button:disabled {
+  background: #999 !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Heading */
+#cableScheduleTool h2 {
+  font-family: 'Carter One', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .actions button,
+  .actions label[role="button"] {
+    min-width: 100%;
+  }
+
+  .data-table th,
+  .data-table td {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+}
+
+/* General container */
+#pipeSizerTool {
+  display: none;
+  padding: 15px;
+  background: #f7f9fc !important;
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  overflow: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Table container scroll */
+.table-container {
+  width: 100%;
+  max-width: calc(100vw - 30px);
+  height: 75vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  background: white;
+  position: relative;
+}
+
+/* Core data table styles */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.85rem;
+  table-layout: fixed;
+  position: relative;
+}
+
+/* Table headers */
+.data-table th {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  background: linear-gradient(135deg, #f36f18);
+  color: #000;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  cursor: default;
+}
+
+/* Column resize handle */
+.data-table th::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 15;
+  border-right: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.data-table th:hover::after {
+  border-right-color: rgba(255,255,255,0.75);
+}
+
+.data-table th.resizing::after {
+  border-right-color: #fff;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Adjusted column widths for pipe sizer */
+.data-table th:nth-child(1) { width: 60px; min-width: 50px; }
+.data-table th:nth-child(2) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(3) { width: 90px; min-width: 80px; }
+.data-table th:nth-child(4) { width: 120px; min-width: 110px; }
+.data-table th:nth-child(5) { width: 120px; min-width: 110px; }
+.data-table th:nth-child(6) { width: 110px; min-width: 100px; }
+.data-table th:nth-child(7) { width: 110px; min-width: 100px; }
+.data-table th:nth-child(8) { width: 110px; min-width: 100px; }
+.data-table th:nth-child(9) { width: 110px; min-width: 100px; }
+.data-table th:nth-child(10) { width: 100px; min-width: 90px; }
+.data-table th:nth-child(11) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(12) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(13) { width: 120px; min-width: 110px; }
+.data-table th:nth-child(14) { width: 110px; min-width: 90px; }
+.data-table th:nth-child(15) { width: 120px; min-width: 100px; }
+.data-table th:nth-child(16) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(17) { width: 130px; min-width: 110px; }
+.data-table th:nth-child(18) { width: 80px; min-width: 70px; }
+
+/* Table body cells */
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Editable inputs styling */
+.editableinput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  height: 28px;
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+.editableinput:focus {
+  border-color: #1f1e1e;
+  outline: none;
+  background: #e9f0ff;
+}
+
+/* Actions container for buttons and inputs */
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  background: #f1f4f8 !important;
+  border-radius: 6px;
+}
+
+/* Buttons and role=button labels styling */
+.actions button,
+.actions label[role="button"] {
+  background: #0c0c0c !important;
+  color: white !important;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  min-width: 130px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.actions button:hover,
+.actions label[role="button"]:hover,
+.actions button:focus-visible,
+.actions label[role="button"]:focus-visible {
+  background: #77797c !important;
+  transform: translateY(-1px);
+  outline: 2px solid #555;
+  outline-offset: 2px;
+}
+
+/* Disabled button style */
+.actions button:disabled {
+  background: #999 !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Heading for pipeSizerTool */
+#pipeSizerTool h2 {
+  font-family: 'Carter One', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .actions button,
+  .actions label[role="button"] {
+    min-width: 100%;
+  }
+
+  .data-table th,
+  .data-table td {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+}
+
+ #sidebar {
+    width: 350px; background-color: #d3d3d3;
+    padding-top: 20px; display: flex; flex-direction: column; gap: 15px; box-sizing: border-box;
+  }
+  #sidebar button {
+    background: none; border: none; text-align: left;
+    padding: 12px 18px; font-weight: bold; cursor: pointer; font-size: 1.15em;
+  }
+  #sidebar button:hover,
+  #sidebar button.active { background-color: #bbb; }
+  #main {
+    flex-grow: 1; padding: 20px; overflow: auto;
+  }
+  h1 {
+    text-align: center; font-weight: normal; margin-bottom: 20px;
+  }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 0.90em;
+  }
+  th, td {
+    border: 1px solid #ddd; padding: 8px 12px; text-align: left;
+  }
+  th {
+    background-color: #e77517; color: black;
+  }
+  tr:hover { background-color: #f1f1f1; }
+  .status-paid { color: green; font-weight: bold; }
+  .status-pending { color: orange; font-weight: bold; }
+  .btn-small {
+    padding: 5px 10px; font-size: 0.95em; margin-left: 5px;
+    cursor: pointer; border-radius: 4px;
+  }
+  .btn-invoice {
+    background-color: #0078d4; color: white; border: none;
+  }
+  .btn-delete {
+    background-color: #d9534f; color: white; border: none;
+  }
+  form {
+    max-width: 500px; background: #fff; padding: 18px;
+    border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin: 20px auto; text-align: center;
+  }
+  label {
+    display: block; margin: 10px 0 5px; font-weight: bold; text-align: left;
+  }
+  input[type="text"], input[type="number"], select {
+    width: 100%; padding: 8px 10px; box-sizing: border-box;
+    border-radius: 2px; border: 1px solid #ccc;
+  }
+  button[type="submit"] {
+    background-color: #0078d4; color: white; border: none;
+    padding: 10px 30px; margin-top: 15px; border-radius: 4px;
+    cursor: pointer; font-weight: bold; display: inline-block;
+  }
+  button[type="submit"]:disabled { background-color: #bbb; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  #search-bar {
+    position: relative; display: flex; justify-content: center; margin-bottom: 10px;
+  }
+  #search-container {
+    position: relative; width: 350px;
+  }
+  #search_keyword {
+    width: 350px; padding: 8px 10px; border-radius: 2px; border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  #suggestions {
+    position: absolute; top: 38px; left: 0; right: 0;
+    background: white; border: 1px solid #ccc; border-top: none;
+    border-radius: 0 0 4px 4px; max-height: 200px; overflow-y: auto;
+    z-index: 1000; display: none;
+  }
+  #suggestions div {
+    padding: 8px 10px; cursor: pointer;
+  }
+  #suggestions div:hover { background-color: #f1f1f1; }
+  #btn-search, #btn-filter {
+    padding: 10px 30px; font-weight: bold; border-radius: 4px; background: #0078d4;
+    color: white; border: none; cursor: pointer; margin-left: 8px;
+  }
+  /* Invoice modal */
+  #invoiceModal {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.15); align-items: center; justify-content: center; z-index: 9999;
+  }
+  #invoiceContent {
+    background: #fff; border-radius: 8px; padding: 32px 32px 40px 32px;
+    min-width: 350px; max-width: 480px; margin: auto; position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-align: left;
+  }
+  #invoiceClose {
+    position: absolute; top: 8px; right: 18px; cursor: pointer;
+    font-size: 24px; color: #222; font-weight: bold;
+  }
+  #downloadInvoiceBtn {
+    margin-top: 20px; background-color: #0078d4; border: none;
+    color: white; padding: 10px 20px; cursor: pointer;
+    border-radius: 4px; font-weight: bold; display: block;
+  }
+  #filter-bar {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  #filter-container {
+    position: relative;
+    width: 350px;
+  }
+  #filter_container input, #filter-container input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  #btn-filter {
+    padding: 10px 30px;
+    font-weight: bold;
+    border-radius: 4px;
+    background: #0078d4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+    height: 40px;
+  }
+
+.hero,
+#login-container,
+#dashboard-container,
+.section-wrap {
+  margin-top: 120px;  /* push content below the 105px header */
+}
+  </style>
+</head>
+<body class="show-headerfooter">
+  <!-- HEADER (Only on frontpage) -->
+  <header class="header-bar" id="main-header" role="banner">
+    <div class="brand-left" aria-label="Brand">
+     <img src="logo.jpg" alt="Design.py Logo" 
+     style="width:195px; height:157px; margin-left:auto; transform: scale(0.7); transform-origin: center;">
+    </div>
+    <nav class="top-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#home" id="nav-home">Home</a></li>
+        <li><a href="#aboutus" id="nav-about">About Us</a></li>
+        <li><a href="#features" id="nav-features">Features</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- FRONT PAGE -->
+  <div id="frontpage-container">
+    <section id="view-home" class="view active" aria-labelledby="homeTitle">
+      <div class="hero">
+        <h1 id="homeTitle">SUPERCHARGE YOUR MEP<br>PROJECTS WITH AI PRECISION</h1>
+        <p class="tag">Get MEP standards answers in seconds. Save time, avoid errors, and keep projects on track with AI-powered guidance.</p>
+        <button class="btn" onclick="showPage('login-container')">GET STARTED</button>
+      </div>
+    </section>
+    <section id="view-features" class="view" aria-labelledby="featuresTitle">
+      <div class="section-wrap">
+        <h2 id="featuresTitle">Features:</h2>
+        <ul>
+          <li>Ask building code and MEP questions – get answers sourced from official standards.</li>
+<li>Supported standards: NBC, IS Codes, IEC, NFPA, ASHRAE, and more.</li>
+<li>Every response cites the relevant clause, page, and table.</li>
+<li>No uploads or registration needed — just chat and get answers instantly.</li>
+        </ul>
+      </div>
+    </section>
+    <section id="view-aboutus" class="view" aria-labelledby="aboutTitle">
+      <div class="section-wrap">
+        <h2 id="aboutTitle">About Us:</h2>
+        <ul>
+          <li>RNEW Consulting Engineers is an advanced consulting engineering firm based in Bengaluru, Karnataka.</li>
+<li>We specialize in mechanical, electrical, and plumbing (MEP) solutions, sustainable building design, project management, and product development for all types of infrastructure.</li>
+<li>Our team merges deep technical expertise with cutting-edge AI technologies to deliver tools like Designpy, giving engineers instant answers from Indian and international building standards.</li>
+<li>Driven by quality, innovation, and client success, we serve businesses, architects, contractors, and professionals across India and beyond.</li>
+<li>With every project, we aim to save time, reduce errors, and build smarter, more resilient environments.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <!-- LOGIN PAGE -->
+  <div id="login-container">
+  <div class="login-box">
+      <h2>Welcome</h2>
+      <p class="subtitle">Login to Designpy to continue to Designpy.</p>
+      <form>
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
+      </form>
+      <div class="divider">OR</div>
+      <button class="google-btn">Continue with Google</button>
+    </div>
+  </div>
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboard-container">
+  <h1>Welcome to MEP Engineering AI Tools</h1>
+  <div class="tool-grid">
+    <!-- Chat Bot with image -->
+    <div class="tool-card" onclick="openTool('chatbot')">
+      <img src="botlogo1.jpg" alt="Chat Bot Logo" class="card-img">
+    </div>
+    <!-- Duct Sizer -->
+        <div class="tool-card" onclick="openTool('duct')">
+  <img src="ductlogo.jpg" alt="AI duct sizing" class="card-img" >
+</div>
+    <!-- Pipe Sizer -->
+     <div class="tool-card" onclick="openTool('pipe')">
+      <img src="pipe size.jpg" alt="AI pipe sizing" class="card-img" >
+</div>
+    <!-- Placeholder tools -->
+    <div class="tool-card" onclick="openTool('cableSchedule')">
+        <p>AI Cable Schedule Tool</p>
+      </div>
+    <div class="tool-card" onclick="openTool('Order Management System')">
+      <p>Order Management System</p>
+    </div>
+  </div>
+</div>
+  <!-- CHAT PAGE -->
+  <div id="app-container">
+    <header>Welcome to MEPGuide AIBOT</header>
+    <div class="container">
+      <div class="chat-section" id="chatSection">
+        <div class="chat-box" id="chatBox">
+          <div class="bot-message">Welcome! Ask your question.</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="userInput" placeholder="Ask your question..." />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+      <div class="pdf-preview" id="pdfPreview">
+        <h3>PDF Preview</h3>
+        <p id="pdfFilename">No PDF selected</p>
+        <iframe id="pdfViewer" title="PDF Viewer" style="width:100%; height:80vh; border:none;"></iframe>
+      </div>
+      <div class="sidebar">
+        <div class="dropdowns">
+          <label for="collectionDropdown">Select Collection</label>
+          <select id="collectionDropdown">
+            <option value="ALL">All Collections</option>
+          </select>
+          <label for="pdfDropdown">Standard PDFs</label>
+          <select id="pdfDropdown">
+            <option value="">Select a Standard PDF</option>
+          </select>
+          <button class="home-button" onclick="showPage('dashboard-container')">⌂</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- AI Duct Sizing Tool -->
+<section id="ductTool" aria-label="AI duct sizing tool" style="display:none;">
+  <h2>AI Duct Sizing Tool</h2>
+  <div class="actions" role="region" aria-label="Duct sizing actions">
+    <input type="file" id="fileUpload" accept=".xls,.xlsx,.csv,.pdf,image/*" style="display:none" onchange="uploadFile()" />
+    <label for="fileUpload" role="button" tabindex="0" aria-controls="ductTable">Upload File</label>
+    <button type="button" onclick="downloadExcel()">Download Excel</button>
+    <button type="button" onclick="downloadPdf()">Download PDF</button>
+    <button id="toggleMergeBtn" type="button" onclick="toggleMerge()">Enable Merge</button>
+    <button id="toggleDeleteBtn" type="button" onclick="toggleDelete()" style="background: #000000;">Delete Rows</button>
+    <button type="button" onclick="addNewRow()" style="background: #000000;">+ Add Row</button>
+    <button type="button" onclick="addNewPage()" style="background: #007bff; color: #fff; margin-left: 8px;">+ Add New Page</button>
+    <button type="button" onclick="backToDashboard()">Back to Dashboard</button>
+  </div>
+        <div class="table-container" id="ductTable">
+            <table class="data-table resizable-table" aria-describedby="ductToolDesc">
+                <thead>
+                    <tr>
+                        <th data-column="0">Sl. No</th>
+                        <th data-column="1" class="tagname-col">Tag name</th>
+                        <th data-column="2">Type fitting</th>
+                        <th data-column="3">Fitting no</th>
+                        <th data-column="4">Flow rate, m3/hr</th>
+                        <th data-column="5">Length, M/No</th>
+                        <th data-column="6">Nom. dia, mm</th>
+                        <th data-column="7">Duct height, mm</th>
+                        <th data-column="8">Duct width, mm</th>
+                        <th data-column="9">Eq dia, mm</th>
+                        <th data-column="10">Aspect ratio</th>
+                        <th data-column="11">Roughness in duct</th>
+                        <th data-column="12">Reynolds number in duct</th>
+                        <th data-column="13">Duct friction co-eff</th>
+                        <th data-column="14">Fitting K factor PDCF</th>
+                        <th data-column="15">Face velocity, m/s</th>
+                        <th data-column="16" class="highlight">Pressure drop, Pa/m</th>
+                        <th data-column="17">Pressure drop, Pa</th>
+                        <th data-column="18">Mark critical path c</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- AI Cable Schedule Tool Section -->
+<section id="cableScheduleTool" aria-label="AI cable schedule tool" style="display:none;">
+  <h2>AI Cable Schedule Tool</h2>
+
+  <div class="actions" role="region" aria-label="Cable schedule actions">
+    <input type="file" id="fileUpload" accept=".xls,.xlsx,.csv,.pdf" style="display:none" onchange="uploadFile()" />
+    <label for="fileUpload" role="button" tabindex="0" aria-controls="cableTable">Upload File</label>
+    <button type="button" onclick="downloadExcel()">Download Excel</button>
+    <button type="button" onclick="downloadPdf()">Download PDF</button>
+    <button id="toggleDeleteBtn" type="button" onclick="toggleDelete()" class="btn-delete">Delete Rows</button>
+    <button type="button" onclick="addNewCableRow()" class="btn-add">+ Add Row</button>
+    <button type="button" onclick="addNewPage()" class="btn-newpage">+ Add New Page</button>
+    <button type="button" onclick="backToDashboard()">Back to Dashboard</button>
+  </div>
+
+  <div class="table-container" id="cableTable">
+    <table class="data-table" aria-describedby="cableScheduleToolDesc" role="grid">
+      <caption id="cableScheduleToolDesc" class="sr-only">
+        Table showing the cable schedule details with editable fields for each parameter.
+      </caption>
+      <thead>
+        <tr>
+          <th>Sl. No</th>
+          <th>DB Name / Panel</th>
+          <th>Circuit Name / Tag</th>
+          <th>Load Type</th>
+          <th>Load Rating (kW/A)</th>
+          <th>Cable Length (m)</th>
+          <th>Cable Size (mm²)</th>
+          <th>Number of Cores</th>
+          <th>Cable Type</th>
+          <th>Conductor Material</th>
+          <th>Voltage (V)</th>
+          <th>Power Factor</th>
+          <th>Installation Type</th>
+          <th>Ambient Temp (°C)</th>
+          <th>Grouping / Derating</th>
+          <th>Calculated Current (A)</th>
+          <th>Voltage Drop (%)</th>
+          <th>Cable Tray Size Required</th>
+          <th>Termination / Glanding</th>
+          <th>Status</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody id="tableBodyCable"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="pipeSizerTool" style="display:none;">
+  <h2>Pipe Sizing Tool</h2>
+  <div class="actions" role="region" aria-label="Pipe sizing actions">
+    <input type="file" id="pipeFileUpload" accept=".xls,.xlsx,.csv,.pdf" style="display:none" onchange="uploadPipeFile()" />
+    <label for="pipeFileUpload" role="button" tabindex="0">Upload File</label>
+    <button type="button" onclick="downloadPipeExcel()">Download Excel</button>
+    <button type="button" onclick="downloadPipePdf()">Download PDF</button>
+    <button type="button" onclick="addNewPipeRow()">+ Add Row</button>
+    <button type="button" onclick="addNewPipePage()">+ Add New Page</button>
+    <button type="button" onclick="backToDashboard()">Back to Dashboard</button>
+  </div>
+
+  <div class="table-container">
+    <table class="data-table" aria-describedby="pipeSizerDesc" role="grid">
+      <caption id="pipeSizerDesc" class="sr-only">Pipe sizing inputs and calculated outputs</caption>
+      <thead>
+        <tr>
+          <th>Sl. No</th>
+          <th>Tag name</th>
+          <th>Fitting no</th>
+          <th>Flow rate, m<sup>3</sup>/hr</th>
+          <th>Length, M/No</th>
+          <th>Nom. dia, mm</th>
+          <th>Pipe outer dia, mm</th>
+          <th>Pipe thickness, mm</th>
+          <th>Pipe Inner dia, mm</th>
+          <th>Pipe code</th>
+          <th>Roughness in pipe</th>
+          <th>Reynolds number in pipe</th>
+          <th>Pipe friction co-eff</th>
+          <th>Fitting K factor</th>
+          <th>Velocity in pipe, m/s</th>
+          <th>Pressure drop Pa/m</th>
+          <th>Pressure drop, Pa</th>
+          <th>Mark Critical path as C</th>
+        </tr>
+      </thead>
+      <tbody id="pipeTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<div id="orderManagementTool" style="display:none;">
+  <div id="sidebar">
+    <button id="btn-create-order">Create New Order</button>
+    <button id="btn-orders" class="active">Orders</button>
+    <button id="btn-update-payment">Update Payment</button>
+    <button id="btn-update-stage">Update Project Stage</button>
+    <button id="btn-search-orders">Search Orders</button>
+    <button id="btn-filter-remaining">Filter by Remaining %</button>
+  </div>
+
+  <div id="main">
+    <h1>ORDER MANAGEMENT SYSTEM</h1>
+
+    <section id="section-create-order" class="content-section">
+      <form id="form-create-order">
+        <label for="order_id">Order ID (Unique)</label>
+        <input type="text" id="order_id" required />
+        <label for="project_name">Project Name</label>
+        <input type="text" id="project_name" required />
+        <label for="architect_name">Architect Name</label>
+        <input type="text" id="architect_name" required />
+        <label for="client_name">Client Name</label>
+        <input type="text" id="client_name" />
+        <label for="client_phone">Client Phone</label>
+        <input type="text" id="client_phone" />
+        <label for="client_gst">Client GST Number</label>
+        <input type="text" id="client_gst" />
+        <label for="client_address">Client Address</label>
+        <input type="text" id="client_address" />
+        <label for="total_amount">Total Amount</label>
+        <input type="number" id="total_amount" min="0" step="0.01" required />
+        <label for="amount_paid">Amount Paid</label>
+        <input type="number" id="amount_paid" min="0" step="0.01" required />
+        <button type="submit">Create Order</button>
+        <div id="create-msg" role="alert"></div>
+      </form>
+    </section>
+
+    <section id="section-update-payment" class="content-section">
+      <form id="form-update-payment">
+        <label for="upd_order_id">Order ID</label>
+        <input type="text" id="upd_order_id" required />
+        <label for="upd_amount_paid">New Payment Amount</label>
+        <input type="number" id="upd_amount_paid" min="0" step="0.01" />
+        <button type="submit">Update Payment</button>
+        <div id="update-payment-msg" role="alert"></div>
+      </form>
+    </section>
+
+    <section id="section-update-stage" class="content-section">
+      <form id="form-update-stage">
+        <label for="upd_stage_order_id">Order ID</label>
+        <input type="text" id="upd_stage_order_id" required />
+        <label for="upd_stage">Project Stage</label>
+        <select id="upd_stage" required>
+          <option value="" disabled selected>-- Select Stage --</option>
+          <option value="0">Design Review (5%)</option>
+          <option value="1">Concept MEP Design (15%)</option>
+          <option value="2">Detailed Design & Drawings (30%)</option>
+          <option value="3">Coordination & Clash Resolution (45%)</option>
+          <option value="4">Approvals (55%)</option>
+          <option value="5">Procurement (65%)</option>
+          <option value="6">Installation/Execution (85%)</option>
+          <option value="7">Testing & Commissioning (95%)</option>
+          <option value="8">Handover (100%)</option>
+        </select>
+        <button type="submit">Update Project Stage</button>
+        <div id="update-stage-msg" role="alert"></div>
+      </form>
+    </section>
+
+    <section id="section-orders" class="content-section active">
+      <div id="all-orders" style="overflow-x:auto; margin-top: 15px;"></div>
+    </section>
+
+    <section id="section-search" class="content-section">
+      <div id="search-bar">
+        <div id="search-container">
+          <input type="text" id="search_keyword" placeholder="Order ID, Project or Architect Name" autocomplete="off" />
+          <div id="suggestions"></div>
+        </div>
+        <button id="btn-search">Search</button>
+      </div>
+      <div id="search-results" style="overflow-x:auto; margin-top: 15px;"></div>
+    </section>
+
+    <section id="section-filter" class="content-section">
+      <div id="filter-bar">
+        <div id="filter-container">
+          <input type="number" id="filter_percent" min="0" max="100" step="1" placeholder="Remaining %" />
+        </div>
+        <button id="btn-filter">Filter</button>
+      </div>
+      <div id="filter-results" style="overflow-x:auto; margin-top: 15px;"></div>
+    </section>
+  </div>
+</div>
+
+<div id="invoiceModal">
+  <div id="invoiceContent">
+    <span id="invoiceClose" onclick="closeInvoiceModal()">×</span>
+    <div id="invoiceFields"></div>
+    <button id="downloadInvoiceBtn" onclick="downloadInvoicePDF()">Download PDF</button>
+  </div>
+</div>
+
+  <!-- FOOTER (Only on frontpage) -->
+  <footer class="site-footer" id="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <ul>
+          <li><a href="#home" id="ftr-home">Home</a></li>
+          <li><a href="#aboutus" id="ftr-about">About Us</a></li>
+          <li><a href="#features" id="ftr-features">Features</a></li>
+        </ul>
+      </div>
+     <div class="footer-col footer-mid">
+  <strong>Designpy provided by R<span class="orange">E</span>NEW Consulting Engineers</strong>
+  <div>
+    We are a consulting engineering company providing innovative and sustainable
+    solutions for buildings, infrastructure, and product development.
+  </div>
+  <div class="footer-social" aria-label="Social media">
+    <a class="yt" href="https://www.youtube.com/@Renew_consulting" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#CC181E"></rect>
+        <path d="M16.8 8.8c-.2-.7-.8-1.3-1.4-1.4C14.3 7 12 7 12 7s-2.3 0-3.4.3c-.7.2-1.2.8-1.4 1.4C7 9.9 7 12 7 12s0 2.1.2 3.2c.2.7.8 1.3 1.4 1.4 1.1.3 3.4.3 3.4.3s2.3 0 3.4-.3c.7-.2 1.2-.8 1.4-1.4.2-1.1.2-3.2.2-3.2s0-2.1-.2-3.2zM10.5 14.2V9.8L14.4 12l-3.9 2.2z" fill="#fff"/>
+      </svg>
+    </a>
+    <a class="li" href="https://www.linkedin.com/company/renew-consulting-engineers-private-limited/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#0077B5"></rect>
+        <path d="M6.95 9h2.1v7h-2.1V9zm1.05-3c.7 0 1.05.46 1.05 1.06C9.05 7.54 8.7 8 7.95 8c-.69 0-1.05-.46-1.05-1.06C6.9 6.46 7.25 6 7.95 6zm9.05 4.8v5.2h-2.1v-4.62c0-1.33-.56-1.98-1.47-1.98-.96 0-1.48.65-1.48 1.98V16h-2.08v-7h2.08v.9c.33-.52 1.09-1.26 2.25-1.26 1.59 0 2.8 1.01 2.8 3.16z" fill="#fff"/>
+      </svg>
+    </a>
+  </div>
+</div>
+      <div class="footer-col">
+        <strong>Contact</strong><br>
+        M/s Renew Consulting Engineers Pvt Ltd.<br>
+        Hallmark Building, Site no. 4C-315, 3rd floor,<br>
+        Banaswadi, Bengaluru-560043.<br>
+        <a href="mailto:renew@renewconsulting.in">renew@renewconsulting.in</a>
+      </div>
+    </div>
+    <div class="footer-copy">Copyright © Renew Consulting Engineers Pvt Ltd</div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script>
+  // ---- ELEMENT REFERENCES ----
+const collectionDropdown = document.getElementById("collectionDropdown");
+const pdfDropdown        = document.getElementById("pdfDropdown");
+const chatBox            = document.getElementById("chatBox");
+const userInput          = document.getElementById("userInput");
+const pdfPreview         = document.getElementById("pdfPreview");
+const pdfFilename        = document.getElementById("pdfFilename");
+const pdfViewer          = document.getElementById("pdfViewer");
+const footerEl           = document.getElementById("site-footer");
+
+// ---- FOOTER VISIBILITY ----
+function updateFooterFor(pageId) {
+  if (!footerEl) return;
+  const showOnHome = pageId === "frontpage-container";
+  footerEl.classList.toggle("hidden", !showOnHome);
+}
+
+function setHeaderFooter(visible) {
+  if (visible) document.body.classList.add('show-headerfooter');
+  else document.body.classList.remove('show-headerfooter');
+}
+
+function showPage(pageId) {
+  const pages = ["frontpage-container", "login-container", "dashboard-container", "app-container"];
+  pages.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = "none";
+  });
+
+  if (pageId === "frontpage-container") {
+    setHeaderFooter(true);
+    const frontPage = document.getElementById("frontpage-container");
+    if (frontPage) frontPage.style.display = "block";
+
+    // Manage nav active states
+    const viewHome = document.getElementById("view-home");
+    const viewFeatures = document.getElementById("view-features");
+    const viewAboutUs = document.getElementById("view-aboutus");
+    if (viewHome) viewHome.classList.add("active");
+    if (viewFeatures) viewFeatures.classList.remove("active");
+    if (viewAboutUs) viewAboutUs.classList.remove("active");
+  } else {
+    setHeaderFooter(false);
+    if (pageId === "login-container") {
+      const loginPage = document.getElementById("login-container");
+      if (loginPage) loginPage.style.display = "flex";
+    } else if (pageId === "dashboard-container") {
+      const dashboardPage = document.getElementById("dashboard-container");
+      if (dashboardPage) dashboardPage.style.display = "block";
+    } else if (pageId === "app-container") {
+      const appPage = document.getElementById("app-container");
+      if (appPage) appPage.style.display = "flex";
+    }
+  }
+  updateFooterFor(pageId);
+}
+
+(function initRouter() {
+  const VIEWS = {
+    home: document.getElementById('view-home'),
+    features: document.getElementById('view-features'),
+    aboutus: document.getElementById('view-aboutus')
+  };
+
+  function showOnly(key) {
+    Object.entries(VIEWS).forEach(([k, el]) => {
+      if (el) el.classList.toggle('active', k === key);
+    });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function route() {
+    if (document.body.classList.contains('show-headerfooter')) {
+      const h = (location.hash || '#home').toLowerCase();
+      if (h.includes('features')) return showOnly('features');
+      if (h.includes('aboutus')) return showOnly('aboutus');
+      return showOnly('home');
+    }
+  }
+
+  window.addEventListener('hashchange', route);
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize to frontpage and proper view
+    showPage('frontpage-container');
+    if (!location.hash) location.replace('#home');
+    route();
+  });
+})();
+
+let loggedIn = false;
+
+// ---- LOGIN HANDLER ----
+async function handleLogin() {
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  if (!usernameInput || !passwordInput) {
+    alert("Login form elements not found.");
+    return;
+  }
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+  if (!username || !password) {
+    alert("Please enter both username and password.");
+    return;
+  }
+  try {
+    const response = await fetch(`/api/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (data.success) {
+      loggedIn = true;
+      showPage("dashboard-container");
+      const header = document.querySelector("#dashboard-container h1");
+      if (header) header.textContent = "Welcome to MEP Engineering AI Tools";
+    } else {
+      alert("Invalid username or password.");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Server error during login.");
+  }
+}
+
+// ---- TOOL NAVIGATION ----
+function openTool(tool) {
+  if (!loggedIn) {
+    alert("Please login to access this tool.");
+    showPage("login-container");
+    return;
+  }
+
+  // Hide all main containers including tools
+  const containerIds = ['dashboard-container', 'app-container', 'ductTool', 'cableScheduleTool', 'pipeTool', 'orderManagementTool'];
+  containerIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  const homeBtn = document.querySelector('.home-button');
+  if (!homeBtn) return;
+
+  // Show/hide home button depending on tool
+  homeBtn.style.display = (tool === 'dashboard') ? 'none' : 'flex';
+
+  if (tool === 'chatbot') {
+    const appContainer = document.getElementById('app-container');
+    if (appContainer) appContainer.style.display = 'flex';
+    loadCollections();
+    loadPDFs();
+  } else if (tool === 'duct') {
+    const ductTool = document.getElementById('ductTool');
+    if (ductTool) ductTool.style.display = 'block';
+  } else if (tool === 'pipe') {
+    const pipeTool = document.getElementById('pipeTool');
+    if (pipeTool) pipeTool.style.display = 'block';
+  } else if (tool === 'cableSchedule') {
+    const cableTool = document.getElementById('cableScheduleTool');
+    if (cableTool) cableTool.style.display = 'block';
+  } else if (tool === 'Order Management System') {
+    const orderTool = document.getElementById('orderManagementTool');
+    if (orderTool) orderTool.style.display = 'block';
+  } else if (tool === 'dashboard') {
+    const dashboard = document.getElementById('dashboard-container');
+    if (dashboard) dashboard.style.display = 'block';
+  } else {
+    alert(`Tool '${tool}' is not implemented yet.`);
+    showDashboard();
+  }
+}
+
+// Show the dashboard and hide other tool containers and home button
+function showDashboard() {
+  const appContainer = document.getElementById("app-container");
+  const dashboardContainer = document.getElementById("dashboard-container");
+  const ductTool = document.getElementById("ductTool");
+  const cableTool = document.getElementById("cableScheduleTool");
+  const pipeTool = document.getElementById("pipeTool");
+  const orderTool = document.getElementById("orderManagementTool");
+  const homeBtn = document.querySelector(".home-button");
+
+  if (appContainer) appContainer.style.display = "none";
+  if (dashboardContainer) dashboardContainer.style.display = "block";
+  if (ductTool) ductTool.style.display = "none";
+  if (cableTool) cableTool.style.display = "none";
+  if (pipeTool) pipeTool.style.display = "none";
+  if (orderTool) orderTool.style.display = "none";
+  if (homeBtn) homeBtn.style.display = "none";
+
+  resetToolCardStates();
+}
+
+// Navigate back to dashboard for clarity
+function backToDashboard() {
+  showDashboard();
+}
+
+// Navigate to login page
+function goToLogin() {
+  showPage("login-container");
+}
+
+// Reset all tool card states - remove active and hovered classes
+function resetToolCardStates() {
+  document.querySelectorAll(".tool-card").forEach(card => {
+    card.classList.remove("active");
+    card.classList.remove("hovered");
+  });
+}
+
+// Setup hover and click handlers for .tool-card elements
+function initToolCardInteractions() {
+  document.querySelectorAll(".tool-card").forEach(card => {
+    card.addEventListener("mouseenter", () => {
+      if (!card.classList.contains("active")) {
+        card.classList.add("hovered");
+      }
+    });
+    card.addEventListener("mouseleave", () => {
+      card.classList.remove("hovered");
+    });
+    card.addEventListener("click", () => {
+      if (card.classList.contains("active")) {
+        card.classList.remove("active");
+      } else {
+        document.querySelectorAll(".tool-card.active").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        card.classList.remove("hovered");
+      }
+    });
+  });
+}
+// Initialize tool card interactions on DOM ready
+document.addEventListener("DOMContentLoaded", initToolCardInteractions);
+
+  // ---- COLLECTIONS ----
+  async function loadCollections() {
+    if (!collectionDropdown) return;
+    try {
+      collectionDropdown.innerHTML = `<option value="ALL">All Collections</option>`;
+      const response = await fetch(`/api/list-collections`);
+      const data = await response.json();
+      if (data.collections) {
+        data.collections.forEach(name => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          collectionDropdown.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error loading collections:", error);
+      collectionDropdown.innerHTML = `<option value="ALL">All Collections</option>`;
+    }
+  }
+  // ---- PDFs ----
+  async function loadPDFs() {
+    if (!pdfDropdown) return;
+    try {
+      pdfDropdown.innerHTML = `<option value="">Select a Standard PDF</option>`;
+      const response = await fetch(`/api/list-pdfs`);
+      const data = await response.json();
+      if (data.pdfs) {
+        data.pdfs.forEach(pdf => {
+          const option = document.createElement("option");
+          option.value = pdf;
+          option.textContent = pdf;
+          pdfDropdown.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error("Error loading PDFs:", error);
+      pdfDropdown.innerHTML = `<option value="">Select a Standard PDF</option>`;
+    }
+  }
+  // ---- PDF PREVIEW ----
+  if (pdfDropdown) {
+    pdfDropdown.addEventListener("change", () => {
+      const selected = pdfDropdown.value;
+      if (selected) {
+        pdfPreview.classList.add("active");
+        pdfFilename.textContent = "Selected PDF: " + selected;
+        pdfViewer.src = `/pdfs/${selected}`;
+      } else {
+        pdfPreview.classList.remove("active");
+        pdfFilename.textContent = "No PDF selected";
+        pdfViewer.src = "";
+      }
+    });
+  }
+  // ---- CHAT ----
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    const selectedCollection = collectionDropdown.value;
+    if (!message) return;
+    const userMsg = document.createElement("div");
+    userMsg.className = "user-message";
+    userMsg.innerHTML = `<strong>You:</strong> ${message}`;
+    chatBox.appendChild(userMsg);
+    const typingMsg = document.createElement("div");
+    typingMsg.className = "bot-message";
+    typingMsg.id = "typing";
+    typingMsg.innerHTML = `<em>Typing...</em>`;
+    chatBox.appendChild(typingMsg);
+    userInput.value = "";
+    const selectedCollections =
+      selectedCollection === "ALL"
+        ? Array.from(collectionDropdown.options).map(opt => opt.value).filter(val => val !== "ALL")
+        : [selectedCollection];
+    try {
+      const response = await fetch(`/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          collection_id: selectedCollections,
+          query: message,
+          top_k: 5
+        })
+      });
+      const data = await response.json();
+      typingMsg.remove();
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot-message";
+      botMsg.innerHTML = `${data.answer || "No response received."}`;
+      chatBox.appendChild(botMsg);
+    } catch (error) {
+      typingMsg.remove();
+      const errMsg = document.createElement("div");
+      errMsg.className = "bot-message";
+      errMsg.innerHTML = `Error: ${error.message}`;
+      chatBox.appendChild(errMsg);
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+  // ---- ENTER KEY ----
+  if (userInput) {
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
+  // ---- INITIAL CHAT ROUTE ----
+  window.addEventListener("load", () => {
+    if (location.hash === "#chatbot") {
+      document.getElementById("dashboard-container").style.display = "none";
+      document.getElementById("app-container").style.display = "flex";
+      loadCollections();
+      loadPDFs();
+    }
+  });
+  // ---- EXPOSE ----
+  window.showPage       = showPage;
+  window.openTool       = openTool;
+  window.showDashboard  = showDashboard;
+  window.goToLogin      = goToLogin;
+  window.handleLogin    = handleLogin;
+  window.sendMessage    = sendMessage;
+  window.onload = () => { renderTable(); };
+// ==== Enhanced AI Duct Sizing Tool with Delete Rows Mode ====
+const fittingNumberMap = {
+  "Straight duct": 1,
+  "Y joint (L) CFM ratio 0.1": 2,
+  "Y joint (L) CFM ratio 0.2": 2.1,
+  "Y joint (L) CFM ratio 0.3": 2.2,
+  "Y joint (L) CFM ratio 0.4": 2.3,
+  "Y joint (L) CFM ratio 0.5": 2.4,
+  "Y joint (L) CFM ratio > 0.5": 2.5,
+  "Y Joint (B) CFM ratio 0.1": 3,
+  "Y Joint (B) CFM ratio 0.2": 3.1,
+  "Y Joint (B) CFM ratio 0.3": 3.2,
+  "Y Joint (B) CFM ratio 0.4": 3.3,
+  "Y Joint (B) CFM ratio > 0.4": 3.4,
+  "Reducer, lower size": 4,
+  "Diverging, Higher size": 4.1,
+  "Offset": 5,
+  "Plenum to duct transition": 6,
+  "90 deg elbow": 7,
+  "45 deg elbow": 7.1,
+  "Shoe collar, area ratio < 0.4": 8,
+  "Exhaust Louvers": 9,
+  "Fresh air Louvers": 10,
+  "FSD": 11,
+  "Opposed blade damper": 12,
+  "Splitter damper": 13,
+  "Hit & miss damper": 14,
+  "Slot diffusers": 15,
+  "Supply air grills": 16,
+  "Return air grills": 17,
+  "Square diffusers": 18,
+  "Circular diffusers": 19,
+  "Jet diffusers": 20,
+  "VAV till 4100 CFM": 21,
+  "VAV above 4100 CFM": 22,
+  "VCD 0 degree": 23,
+  "VCD 15 degree": 24,
+  "VCD 30 degree": 25,
+  "VCD 45 degree": 26,
+  "VCD 60 degree": 27,
+  "Circular damper 0 degree": 28,
+  "Circular damper 15 degree": 29,
+  "Circular damper 30 degree": 30,
+  "Circular damper 45 degree": 31,
+  "Perforated grills": 32,
+  "Floor grills": 33,
+  "Linear supply air grills": 34,
+  "Egg crate grills": 35,
+  "Swirl diffusers": 36,
+  "Plenum VCD, 0 degree": 37,
+  "Fan inlet L/H > 5": 38,
+  "Flexible duct": 41,
+  "Pre-filter": 42,
+  "Bag filter": 43,
+  "Hepa filter": 44,
+  "Coil 1 PD": 45,
+  "Coil 2 PD": 46,
+  "Coil 3 PD": 47,
+  "Coil 4 PD": 48,
+  "Coil 5 PD": 49,
+  "Miscl 1 PD": 50,
+  "Miscl 2 PD": 51,
+  "Miscl 3 PD": 52,
+};
+function createEmptyRow(index) {
+  return {
+    "Sl. No": index,
+    "Tag name": "",
+    "Type fitting": "",
+    "Fitting no": "",
+    "Flow rate, m3/hr": "",
+    "Length, M/No": 10.0,
+    "Nom. dia, mm": 400,
+    "Duct height, mm": 150,
+    "Duct width, mm": "",
+    "Eq dia, mm": "",
+    "Aspect ratio": "",
+    "Roughness in duct": "",
+    "Reynolds number in duct": "",
+    "Duct friction co-eff": "",
+    "Fitting K factor PDCF": "",
+    "Face velocity, m/s": "",
+    "Pressure drop, Pa/m": "",
+    "Pressure drop, Pa": "",
+    "Mark critical path c": "",
+    merged: false,
+    mergedFrom: null,
+    originalIndex: index,
+    isManualEdit: false
+  };
+}
+let rows = [createEmptyRow(1)];
+let mergeMode = false;
+let deleteMode = false;
+let selectedMergeRows = [];
+let selectedDeleteRows = [];
+let originalRowsBackup = null;
+const MAX_VELOCITY = 7.62;
+const MAX_PRESSURE_DROP = 0.64;
+// Add new row manually
+function addNewRow() {
+  rows.push(createEmptyRow(rows.length + 1));
+  renderTable();
+}
+// Ensure empty row at bottom automatically
+function ensureBottomEmptyRow() {
+  const last = rows[rows.length - 1];
+  if (!last || last["Tag name"] || last["Flow rate, m3/hr"] || last["Type fitting"]) {
+    rows.push(createEmptyRow(rows.length + 1));
+    setTimeout(() => renderTable(), 50);
+  }
+}
+// Column Resizing Functions (unchanged)
+function initColumnResize() {
+  const table = document.querySelector('.data-table');
+  if (!table) return;
+  const headers = table.querySelectorAll('th');
+  headers.forEach((header, index) => {
+    if (index < headers.length - 1) {
+      header.style.position = 'relative';
+      header.addEventListener('mousedown', handleMouseDown);
+    }
+  });
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+}
+function handleMouseDown(e) {
+  const rect = e.target.getBoundingClientRect();
+  const rightEdge = rect.right;
+  if (e.clientX >= rightEdge - 6) {
+    isResizing = true;
+    currentResizeColumn = e.target;
+    startX = e.clientX;
+    startWidth = parseInt(window.getComputedStyle(currentResizeColumn).width);
+    currentResizeColumn.classList.add('resizing');
+    document.querySelector('.data-table').classList.add('resizing');
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}
+function handleMouseMove(e) {
+  if (!isResizing || !currentResizeColumn) return;
+  const diff = e.clientX - startX;
+  const newWidth = Math.max(startWidth + diff, 50); 
+  const headers = Array.from(currentResizeColumn.parentNode.children);
+  const columnIndex = headers.indexOf(currentResizeColumn);
+  currentResizeColumn.style.width = newWidth + 'px';
+  const table = document.querySelector('.data-table');
+  const rows = table.querySelectorAll('tbody tr');
+  rows.forEach(row => {
+    const cell = row.children[columnIndex];
+    if (cell) {
+      cell.style.width = newWidth + 'px';
+    }
+  });
+  e.preventDefault();
+}
+function handleMouseUp(e) {
+  if (isResizing) {
+    isResizing = false; 
+    if (currentResizeColumn) {
+      currentResizeColumn.classList.remove('resizing');
+      currentResizeColumn = null;
+    } 
+    const table = document.querySelector('.data-table');
+    if (table) {
+      table.classList.remove('resizing');
+    }
+  }
+}
+// Core backend calculation function
+async function calculateRowsBackend(inputRows) {
+  try {
+    const response = await fetch("/api/duct/calculate_ducts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(inputRows)
+    });
+    if (!response.ok) throw new Error("Calculation API error");
+    return await response.json();
+  } catch (e) {
+    console.error(e);
+    alert("Failed to calculate duct sizing. Please try again.");
+    return null;
+  }
+}
+// Field update logic
+async function updateField(i, field, value) {
+  if (!rows[i] || (rows[i].merged && field !== 'Tag name')) return;
+  if (["Flow rate, m3/hr", "Nom. dia, mm", "Duct height, mm", "Length, M/No"].includes(field)) {
+    value = value === '' ? '' : parseFloat(value);
+    if (value !== '' && isNaN(value)) return;
+    if (value < 0) return;
+  }
+  if (["Flow rate, m3/hr", "Nom. dia, mm", "Duct height, mm"].includes(field)) {
+    rows[i].isManualEdit = true;
+  }
+  rows[i][field] = value;
+  if (field === "Type fitting") {
+    rows[i]["Fitting no"] = fittingNumberMap[value] || 1;
+  }
+  if (
+    rows[i]["Flow rate, m3/hr"] !== '' &&
+    rows[i]["Flow rate, m3/hr"] !== null &&
+    !isNaN(rows[i]["Flow rate, m3/hr"])
+  ) {
+    const inputRow = {
+      "Tag name": rows[i]["Tag name"] || "",
+      "Type fitting": rows[i]["Type fitting"] || "Straight duct",
+      "Flow rate, m3/hr": rows[i]["Flow rate, m3/hr"],
+      "Length, M/No": rows[i]["Length, M/No"] || 10,
+      "Nom. dia, mm": rows[i]["Nom. dia, mm"] || 400,
+      "Duct height, mm": rows[i]["Duct height, mm"] || 150,
+      "Duct type": 2
+    };
+    const result = await calculateRowsBackend([inputRow]);
+    if (result && result.length === 1) {
+      const updated = result[0];
+      if (!rows[i].isManualEdit || field !== "Nom. dia, mm")
+        rows[i]["Nom. dia, mm"] = updated["Nom. dia, mm"];
+      if (!rows[i].isManualEdit || field !== "Duct height, mm")
+        rows[i]["Duct height, mm"] = updated["Duct height, mm"];
+      [
+        "Length, M/No",
+        "Duct width, mm",
+        "Eq dia, mm",
+        "Aspect ratio",
+        "Roughness in duct",
+        "Reynolds number in duct",
+        "Duct friction co-eff",
+        "Fitting K factor PDCF",
+        "Face velocity, m/s",
+        "Pressure drop, Pa/m",
+        "Pressure drop, Pa",
+        "Mark critical path c"
+      ].forEach((k) => {
+        rows[i][k] = updated[k];
+      });
+    }
+  }
+  renderTable();
+  // Auto add empty row if needed
+  if (
+    i === rows.length - 1 &&
+    ((field === "Tag name" && value && value.trim() !== "") ||
+      (field === "Flow rate, m3/hr" && value !== "" && !isNaN(value)) ||
+      (field === "Type fitting" && value !== ""))
+  ) {
+    ensureBottomEmptyRow();
+  }
+}
+// Merge rows; keep originals, add merged row at end
+async function performMergeRows() {
+  if (selectedMergeRows.length < 2) return;
+  let rowsToMerge = selectedMergeRows.map((idx) => {
+    const r = rows[idx];
+    return {
+      "Tag name": r["Tag name"],
+      "Type fitting": r["Type fitting"] || "Straight duct",
+      "Flow rate, m3/hr": parseFloat(r["Flow rate, m3/hr"]) || 0,
+      "Length, M/No": parseFloat(r["Length, M/No"]) || 10,
+      "Nom. dia, mm": parseFloat(r["Nom. dia, mm"]) || 400,
+      "Duct height, mm": parseFloat(r["Duct height, mm"]) || 150,
+      "Duct type": 2
+    };
+  });
+  const mergedTagName = selectedMergeRows
+    .map((idx) => rows[idx]["Tag name"])
+    .filter(Boolean)
+    .join(" + ");
+  try {
+    const response = await fetch("/api/duct/merge_rows", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(rowsToMerge)
+    });
+    if (!response.ok) throw new Error("Merge failed");
+    const mergedRow = await response.json();
+    rows.push({
+      "Sl. No": rows.length + 1,
+      "Tag name": mergedTagName,
+      "Type fitting": mergedRow["Type fitting"],
+      "Fitting no": fittingNumberMap[mergedRow["Type fitting"]] || 1,
+      "Flow rate, m3/hr": mergedRow["Flow rate, m3/hr"],
+      "Length, M/No": mergedRow["Length, M/No"],
+      "Nom. dia, mm": mergedRow["Nom. dia, mm"],
+      "Duct height, mm": mergedRow["Duct height, mm"],
+      "Duct width, mm": mergedRow["Duct width, mm"],
+      "Eq dia, mm": mergedRow["Eq dia, mm"],
+      "Aspect ratio": mergedRow["Aspect ratio"],
+      "Roughness in duct": mergedRow["Roughness in duct"],
+      "Reynolds number in duct": mergedRow["Reynolds number in duct"],
+      "Duct friction co-eff": mergedRow["Duct friction co-eff"],
+      "Fitting K factor PDCF": mergedRow["Fitting K factor PDCF"],
+      "Face velocity, m/s": mergedRow["Face velocity, m/s"],
+      "Pressure drop, Pa/m": mergedRow["Pressure drop, Pa/m"],
+      "Pressure drop, Pa": mergedRow["Pressure drop, Pa"],
+      "Mark critical path c": mergedRow["Mark critical path c"],
+      merged: true,
+      mergedFrom: [...selectedMergeRows]
+    });
+    rows.forEach((row, idx) => {
+      row["Sl. No"] = idx + 1;
+    });
+    selectedMergeRows = [];
+    renderTable();
+    ensureBottomEmptyRow();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to merge rows.");
+  }
+}
+// Toggle merge mode UI and logic
+function toggleMerge() {
+  const button = document.getElementById("toggleMergeBtn");
+  if (!mergeMode) {
+    if (deleteMode) toggleDelete();
+    originalRowsBackup = JSON.parse(JSON.stringify(rows));
+    mergeMode = true;
+    selectedMergeRows = [];
+    button.textContent = "Disable Merge";
+    button.style.background = "#dc3545";
+    if (!document.getElementById("merge-info")) {
+      const infoText = document.createElement("p");
+      infoText.id = "merge-info";
+      infoText.textContent = "✓ MERGE MODE: Select 2+ rows with checkboxes to merge them.";
+      infoText.style =
+        "text-align:center;color:#000;font-weight:bold;font-size:1rem;";
+      document
+        .getElementById("ductTool")
+        .insertBefore(infoText, document.querySelector(".table-container"));
+    }
+  } else {
+    if (originalRowsBackup) {
+      rows = JSON.parse(JSON.stringify(originalRowsBackup));
+      rows.forEach((row, index) => {
+        row["Sl. No"] = index + 1;
+        row.merged = false;
+        row.mergedFrom = null;
+        row.isManualEdit = false;
+      });
+      originalRowsBackup = null;
+    }
+    mergeMode = false;
+    selectedMergeRows = [];
+    button.textContent = "Enable Merge";
+    button.style.background = "#17a2b8";
+    const infoText = document.getElementById("merge-info");
+    if (infoText) infoText.remove();
+  }
+  renderTable();
+}
+function onSelectMergeRow(checkbox) {
+  const idx = parseInt(checkbox.dataset.index, 10);
+  if (checkbox.checked) {
+    if (!selectedMergeRows.includes(idx)) selectedMergeRows.push(idx);
+  } else {
+    selectedMergeRows = selectedMergeRows.filter((i) => i !== idx);
+  }
+  if (selectedMergeRows.length >= 2) {
+    setTimeout(() => performMergeRows(), 100);
+  }
+}
+// Toggle delete mode UI and logic
+function toggleDelete() {
+  const button = document.getElementById("toggleDeleteBtn");
+  if (!deleteMode) {
+    if (mergeMode) {
+      toggleMerge();
+    }
+    deleteMode = true;
+    selectedDeleteRows = [];
+    button.textContent = "Delete Selected";
+    button.style.background = "#dc3545";
+    button.disabled = true;
+    if (!document.getElementById("delete-info")) {
+      const infoText = document.createElement("p");
+      infoText.id = "delete-info";
+      infoText.style.textAlign = "center";
+      infoText.style.color = "#000";
+      infoText.style.fontWeight = "bold";
+      infoText.style.fontSize = "1rem";
+      infoText.textContent = "⚠️ DELETE MODE: Select rows with checkboxes to delete them.";
+      document
+        .getElementById("ductTool")
+        .insertBefore(infoText, document.querySelector(".table-container"));
+    }
+  } else {
+    deleteMode = false;
+    selectedDeleteRows = [];
+    button.textContent = "Delete Rows";
+    button.style.background = "#6c757d";
+    button.disabled = false;
+    const infoText = document.getElementById("delete-info");
+    if (infoText) infoText.remove();
+  }
+  renderTable();
+}
+function onSelectDeleteRow(checkbox) {
+  const idx = parseInt(checkbox.dataset.index, 10);
+  if (checkbox.checked) {
+    if (!selectedDeleteRows.includes(idx)) selectedDeleteRows.push(idx);
+  } else {
+    selectedDeleteRows = selectedDeleteRows.filter((i) => i !== idx);
+  }
+  const deleteButton = document.getElementById("toggleDeleteBtn");
+  if (selectedDeleteRows.length > 0) {
+    deleteButton.disabled = false;
+    deleteButton.textContent = `Delete Selected (${selectedDeleteRows.length})`;
+    deleteButton.onclick = performDeleteRows;
+  } else {
+    deleteButton.disabled = true;
+    deleteButton.textContent = "Delete Selected";
+    deleteButton.onclick = null;
+  }
+}
+function performDeleteRows() {
+  if (selectedDeleteRows.length === 0) return;
+  const rowNumbers = selectedDeleteRows.map((i) => i + 1).join(", ");
+  if (!confirm(`Are you sure you want to delete rows: ${rowNumbers}?`)) {
+    return;
+  }
+  selectedDeleteRows.sort((a, b) => b - a);
+  selectedDeleteRows.forEach((idx) => {
+    rows.splice(idx, 1);
+  });
+  if (rows.length === 0) {
+    rows = [createEmptyRow(1)];
+  }
+  rows.forEach((row, i) => {
+    row["Sl. No"] = i + 1;
+  });
+  toggleDelete();
+}
+async function uploadFile() {
+  const fileInput = document.getElementById("fileUpload");
+  if (!fileInput.files.length) {
+    alert("Please select a file to upload.");
+    return;
+  }
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("file", file);
+  try {
+    const response = await fetch("/api/duct/upload_file", {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+    if (result.error) {
+      alert("Upload error: " + result.error);
+      return;
+    }
+    if (result.results && Array.isArray(result.results)) {
+      rows = result.results.map((row, idx) => ({
+        ...createEmptyRow(idx + 1),
+        ...row,
+        "Sl. No": idx + 1,
+        isManualEdit: false,
+      }));
+      if (rows.length === 0) rows = [createEmptyRow(1)];
+      renderTable();
+      alert("File uploaded successfully! Calculations applied.");
+    } else {
+      alert("Upload succeeded but no data parsed.");
+      rows = [createEmptyRow(1)];
+      renderTable();
+    }
+  } catch (err) {
+    console.error("Upload failed:", err);
+    alert("Failed to upload and process file.");
+  }
+}
+function downloadExcel() {
+  if (typeof XLSX === "undefined") {
+    alert("SheetJS/XLSX library not loaded!");
+    return;
+  }
+  const cleanRows = rows.filter(
+    (row) =>
+      row["Tag name"] &&
+      row["Tag name"].trim() !== "" &&
+      row["Flow rate, m3/hr"] &&
+      row["Flow rate, m3/hr"] !== ""
+  );
+  const worksheetData = cleanRows.map((row, index) => ({
+    "Sl. No": index + 1,
+    "Tag name": row["Tag name"],
+    "Type fitting": row["Type fitting"],
+    "Fitting no": row["Fitting no"],
+    "Flow rate, m3/hr": row["Flow rate, m3/hr"],
+    "Length, M/No": row["Length, M/No"],
+    "Nom. dia, mm": row["Nom. dia, mm"],
+    "Duct height, mm": row["Duct height, mm"],
+    "Duct width, mm": row["Duct width, mm"],
+    "Eq dia, mm": row["Eq dia, mm"],
+    "Aspect ratio": row["Aspect ratio"],
+    "Roughness in duct": row["Roughness in duct"],
+    "Reynolds number in duct": row["Reynolds number in duct"],
+    "Duct friction co-eff": row["Duct friction co-eff"],
+    "Fitting K factor PDCF": row["Fitting K factor PDCF"],
+    "Face velocity, m/s": row["Face velocity, m/s"],
+    "Pressure drop, Pa/m": row["Pressure drop, Pa/m"],
+    "Pressure drop, Pa": row["Pressure drop, Pa"],
+    "Mark critical path c": row["Mark critical path c"],
+  }));
+  const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "DuctSizing");
+  XLSX.writeFile(workbook, "duct_sizing_results.xlsx");
+}
+function downloadPdf() {
+  if (typeof window.jspdf === "undefined") {
+    alert("jsPDF library not loaded!");
+    return;
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("l", "mm", "a4");
+  const cleanRows = rows.filter(
+    (row) =>
+      row["Tag name"] &&
+      row["Tag name"].trim() !== "" &&
+      row["Flow rate, m3/hr"] &&
+      row["Flow rate, m3/hr"] !== ""
+  );
+  const columns = [
+    "Sl. No",
+    "Tag name",
+    "Type fitting",
+    "Flow rate, m3/hr",
+    "Length, M/No",
+    "Nom. dia, mm",
+    "Duct height, mm",
+    "Duct width, mm",
+    "Face velocity, m/s",
+    "Pressure drop, Pa/m",
+    "Pressure drop, Pa",
+  ];
+  const rowsData = cleanRows.map((r, index) => [
+    index + 1,
+    r["Tag name"],
+    r["Type fitting"],
+    r["Flow rate, m3/hr"],
+    r["Length, M/No"],
+    r["Nom. dia, mm"],
+    r["Duct height, mm"],
+    r["Duct width, mm"],
+    r["Face velocity, m/s"],
+    r["Pressure drop, Pa/m"],
+    r["Pressure drop, Pa"],
+  ]);
+  doc.autoTable({
+    startY: 20,
+    head: [columns],
+    body: rowsData,
+    styles: { fontSize: 8 },
+    headStyles: { fillColor: "#eb8108", textColor: "#000000" },
+  });
+  doc.save("duct_sizing_results.pdf");
+}
+function backToDashboard() {
+  document.getElementById("ductTool").style.display = "none";
+  if (document.getElementById("app-container"))
+    document.getElementById("app-container").style.display = "none";
+  if (document.getElementById("dashboard-container"))
+    document.getElementById("dashboard-container").style.display = "block";
+  const homeBtn = document.querySelector(".home-button");
+  if (homeBtn) homeBtn.style.display = "none";
+}
+function renderTable() {
+  const tbody = document.getElementById("tableBody");
+  if (!tbody) {
+    console.error("Table body not found");
+    return;
+  }
+  tbody.innerHTML = "";
+  rows.forEach((row, i) => {
+    const fittingOptionsHtml = Object.keys(fittingNumberMap)
+      .map(
+        (opt) =>
+          `<option value="${opt}"${
+            row["Type fitting"] === opt ? " selected" : ""
+          }>${opt}</option>`
+      )
+      .join("");
+    const trClass = row.merged ? "merged-row" : "";
+    let slNoCellHtml = `<span>${row["Sl. No"]}</span>`;
+    if (mergeMode && row["Tag name"] && row["Tag name"].trim() !== "") {
+      const checkboxStyle = "margin-left: 5px; transform: scale(1.2);";
+      slNoCellHtml += ` <input type="checkbox" class="merge-checkbox" data-index="${i}" ${
+        selectedMergeRows.includes(i) ? "checked" : ""
+      } onchange="onSelectMergeRow(this)" style="${checkboxStyle}" title="Select for merging">`;
+    }
+    if (deleteMode && row["Tag name"] && row["Tag name"].trim() !== "") {
+      const checkboxStyle =
+        "margin-left: 5px; transform: scale(1.2); accent-color: #dc3545;";
+      slNoCellHtml += ` <input type="checkbox" class="delete-checkbox" data-index="${i}" ${
+        selectedDeleteRows.includes(i) ? "checked" : ""
+      } onchange="onSelectDeleteRow(this)" style="${checkboxStyle}" title="Select for deletion">`;
+    }
+    let mergeInfo = "";
+    if (row.merged && row.mergedFrom) {
+      const sourceRows = row.mergedFrom.map((idx) => idx + 1).join(", ");
+      mergeInfo = ` <small style="color: #28a745; font-weight: bold;">[From: ${sourceRows}]</small>`;
+    }
+    const isReadonly = row.merged;
+    const mergedClass = row.merged
+      ? `style="background: linear-gradient(135deg, #e8f5e8, #d4edda); font-weight: bold;"`
+      : "";
+    const velocityCritical = parseFloat(row["Face velocity, m/s"]) > MAX_VELOCITY;
+    const pressureCritical =
+      parseFloat(row["Pressure drop, Pa/m"]) > MAX_PRESSURE_DROP;
+    tbody.insertAdjacentHTML(
+      "beforeend",
+      `
+        <tr class="${trClass}" ${mergedClass}>
+        <td class="sl-no-cell">${slNoCellHtml}${mergeInfo}</td>
+        <td><input type="text" class="editableinput tagname-input" value="${
+          row["Tag name"] || ""
+        }" onchange="updateField(${i}, 'Tag name', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Enter tag name" /></td>
+        <td><select class="editableinput" onchange="updateField(${i}, 'Type fitting', this.value)" ${
+          isReadonly ? "disabled" : ""
+        }><option value="">Select...</option>${fittingOptionsHtml}</select></td>
+        <td class="auto-calc">${row["Fitting no"] || ""}</td>
+        <td><input type="number" class="editableinput" min="0" step="any" value="${
+          row["Flow rate, m3/hr"] || ""
+        }" onchange="updateField(${i}, 'Flow rate, m3/hr', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Flow rate" /></td>
+        <td><input type="number" class="editableinput" min="0" step="0.1" value="${
+          row["Length, M/No"] || 10
+        }" onchange="updateField(${i}, 'Length, M/No', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } /></td>
+        <td><input type="number" class="editableinput override-field" min="0" step="25" value="${
+          row["Nom. dia, mm"] || 400
+        }" onchange="updateField(${i}, 'Nom. dia, mm', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Override" title="Manual override available" /></td>
+        <td><input type="number" class="editableinput override-field" min="0" step="25" value="${
+          row["Duct height, mm"] || 150
+        }" onchange="updateField(${i}, 'Duct height, mm', this.value)" ${
+        isReadonly ? "readonly" : ""
+      } placeholder="Override" title="Manual override available" /></td>
+        <td class="auto-calc">${row["Duct width, mm"] || ""}</td>
+        <td class="auto-calc">${row["Eq dia, mm"] || ""}</td>
+        <td class="auto-calc">${row["Aspect ratio"] || ""}</td>
+        <td class="auto-calc">${row["Roughness in duct"] || ""}</td>
+        <td class="auto-calc">${row["Reynolds number in duct"] || ""}</td>
+        <td class="auto-calc">${row["Duct friction co-eff"] || ""}</td>
+        <td class="auto-calc">${row["Fitting K factor PDCF"] || ""}</td> 
+        <td class="target-value ${
+          velocityCritical ? "critical-highlight" : ""
+        }">${row["Face velocity, m/s"] || ""}</td>
+        <td class="target-value ${
+          pressureCritical ? "critical-highlight" : ""
+        }">${row["Pressure drop, Pa/m"] || ""}</td>
+        <td class="auto-calc">${row["Pressure drop, Pa"] || ""}</td>
+        <td class="auto-calc">${row["Mark critical path c"] || ""}</td>
+        </tr>
+    `
+    );
+  });
+  setTimeout(() => {
+    if (typeof initColumnResize === "function") initColumnResize();
+  }, 100);
+}
+// Init render on DOM load
+document.addEventListener("DOMContentLoaded", function () {
+  renderTable();
+});   
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", renderTable);
+} else {
+  renderTable();
+}
+function addNewPage() {
+  if (!confirm("Add new page? This will clear current data.")) return;
+  rows = [createEmptyRow(1)];
+  mergeMode = false;
+  deleteMode = false;
+  selectedMergeRows = [];
+  selectedDeleteRows = [];
+  originalRowsBackup = null;
+  renderTable();
+}
+
+// Cable Scheduling Tool Data Storage
+// Cable Scheduling Tool Data Storage
+let rowsCable = [];
+
+// Create an empty cable row with default values
+function createEmptyCableRow(index) {
+  return {
+    "Sl. No": index,
+    "DB Name / Panel": "",
+    "Circuit Name / Tag": "",
+    "Load Type": "",
+    "Load Rating (kW/A)": "",
+    "Cable Length (m)": "",
+    "Cable Size (mm²)": "",
+    "Number of Cores": "",
+    "Cable Type": "",
+    "Conductor Material": "",
+    "Voltage (V)": "",
+    "Power Factor": 0.8,
+    "Installation Type": "",
+    "Ambient Temp (°C)": "",
+    "Grouping / Derating": "",
+    "Calculated Current (A)": "",
+    "Voltage Drop (%)": "",
+    "Cable Tray Size Required": "",
+    "Termination / Glanding": "",
+    "Status": "",
+    "Remarks": "",
+    "id": null // store backend cable ID
+  };
+}
+
+// Add a new empty row
+function addNewCableRow() {
+  rowsCable.push(createEmptyCableRow(rowsCable.length + 1));
+  renderCableTable();
+}
+
+// Render cable schedule table rows dynamically
+function renderCableTable() {
+  const tbody = document.getElementById("tableBodyCable");
+  if (!tbody) {
+    console.error("Cable Schedule Table body not found");
+    return;
+  }
+  tbody.innerHTML = "";
+  rowsCable.forEach((row, i) => {
+    const escapeHtml = (str) => String(str || "").replace(/[&<>"']/g, (m) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[m]);
+    tbody.insertAdjacentHTML(
+      "beforeend",
+      `<tr>
+        <td>${escapeHtml(row["Sl. No"])}</td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "DB Name / Panel", this.value)' value="${escapeHtml(row["DB Name / Panel"])}"></td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "Circuit Name / Tag", this.value)' value="${escapeHtml(row["Circuit Name / Tag"])}"></td>
+        <td><select class='editableinput' onchange='updateCableField(${i}, "Load Type", this.value)'>
+          <option value="">Select...</option>
+          <option value="Lighting"${row["Load Type"] === "Lighting" ? " selected" : ""}>Lighting</option>
+          <option value="Power"${row["Load Type"] === "Power" ? " selected" : ""}>Power</option>
+          <option value="HVAC"${row["Load Type"] === "HVAC" ? " selected" : ""}>HVAC</option>
+          <option value="Control"${row["Load Type"] === "Control" ? " selected" : ""}>Control</option>
+        </select></td>
+        <td><input class='editableinput' type='number' step='any' onchange='updateCableField(${i}, "Load Rating (kW/A)", this.value)' value="${escapeHtml(row["Load Rating (kW/A)"])}"></td>
+        <td><input class='editableinput' type='number' step='any' onchange='updateCableField(${i}, "Cable Length (m)", this.value)' value="${escapeHtml(row["Cable Length (m)"])}"></td>
+        <td><input class='editableinput' type='number' step='any' onchange='updateCableField(${i}, "Cable Size (mm²)", this.value)' value="${escapeHtml(row["Cable Size (mm²)"])}"></td>
+        <td><input class='editableinput' type='number' onchange='updateCableField(${i}, "Number of Cores", this.value)' value="${escapeHtml(row["Number of Cores"])}"></td>
+        <td><select class='editableinput' onchange='updateCableField(${i}, "Cable Type", this.value)'>
+          <option value="">Select...</option>
+          <option value="XLPE"${row["Cable Type"] === "XLPE" ? " selected" : ""}>XLPE</option>
+          <option value="PVC"${row["Cable Type"] === "PVC" ? " selected" : ""}>PVC</option>
+          <option value="Armoured"${row["Cable Type"] === "Armoured" ? " selected" : ""}>Armoured</option>
+        </select></td>
+        <td><select class='editableinput' onchange='updateCableField(${i}, "Conductor Material", this.value)'>
+          <option value="">Select...</option>
+          <option value="Copper"${row["Conductor Material"] === "Copper" ? " selected" : ""}>Copper</option>
+          <option value="Aluminum"${row["Conductor Material"] === "Aluminum" ? " selected" : ""}>Aluminum</option>
+        </select></td>
+        <td><input class='editableinput' type='number' step='any' onchange='updateCableField(${i}, "Voltage (V)", this.value)' value="${escapeHtml(row["Voltage (V)"])}"></td>
+        <td><input class='editableinput' type='number' step='any' min='0' max='1' onchange='updateCableField(${i}, "Power Factor", this.value)' value="${escapeHtml(row["Power Factor"]) || 0.8}"></td>
+        <td><select class='editableinput' onchange='updateCableField(${i}, "Installation Type", this.value)'>
+          <option value="">Select...</option>
+          <option value="Tray"${row["Installation Type"] === "Tray" ? " selected" : ""}>Tray</option>
+          <option value="Conduit"${row["Installation Type"] === "Conduit" ? " selected" : ""}>Conduit</option>
+          <option value="Buried"${row["Installation Type"] === "Buried" ? " selected" : ""}>Buried</option>
+          <option value="Duct"${row["Installation Type"] === "Duct" ? " selected" : ""}>Duct</option>
+        </select></td>
+        <td><input class='editableinput' type='number' step='any' onchange='updateCableField(${i}, "Ambient Temp (°C)", this.value)' value="${escapeHtml(row["Ambient Temp (°C)"])}"></td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "Grouping / Derating", this.value)' value="${escapeHtml(row["Grouping / Derating"])}"></td>
+        <td>${escapeHtml(row["Calculated Current (A)"])}</td>
+        <td>${escapeHtml(row["Voltage Drop (%)"])}</td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "Cable Tray Size Required", this.value)' value="${escapeHtml(row["Cable Tray Size Required"])}"></td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "Termination / Glanding", this.value)' value="${escapeHtml(row["Termination / Glanding"])}"></td>
+        <td><select class='editableinput' onchange='updateCableField(${i}, "Status", this.value)'>
+          <option value="">Select...</option>
+          <option value="Planned"${row["Status"] === "Planned" ? " selected" : ""}>Planned</option>
+          <option value="Installed"${row["Status"] === "Installed" ? " selected" : ""}>Installed</option>
+          <option value="Tested"${row["Status"] === "Tested" ? " selected" : ""}>Tested</option>
+          <option value="Commissioned"${row["Status"] === "Commissioned" ? " selected" : ""}>Commissioned</option>
+        </select></td>
+        <td><input class='editableinput' type='text' onchange='updateCableField(${i}, "Remarks", this.value)' value="${escapeHtml(row["Remarks"])}"></td>
+      </tr>`
+    );
+  });
+  setTimeout(() => {
+    if (typeof initColumnResize === 'function') initColumnResize();
+  }, 100);
+}
+
+// Update a field and re-render table
+function updateCableField(index, field, value) {
+  if (!rowsCable[index]) return;
+  rowsCable[index][field] = value;
+  renderCableTable();
+}
+
+// Fetch cables list from API and load into table
+async function fetchCables() {
+  try {
+    const response = await fetch('/api/cable/cables/');
+    if (!response.ok) throw new Error('Failed to fetch cables');
+    const cables = await response.json();
+    rowsCable = cables.map((cable, i) => ({
+      "Sl. No": i + 1,
+      "DB Name / Panel": cable.from_device || "",
+      "Circuit Name / Tag": cable.tag || "",
+      "Load Type": "", // Map if you add corresponding backend fields
+      "Load Rating (kW/A)": cable.current_rating_amp || "",
+      "Cable Length (m)": cable.length_meters || "",
+      "Cable Size (mm²)": cable.conductor_area_mm2 || "",
+      "Number of Cores": "",
+      "Cable Type": cable.cable_type || "",
+      "Conductor Material": cable.cable_type.includes('Cu') ? 'Copper' : 'Aluminum',
+      "Voltage (V)": cable.voltage_drop_volt || "",
+      "Power Factor": 0.8,
+      "Installation Type": "",
+      "Ambient Temp (°C)": "",
+      "Grouping / Derating": "",
+      "Calculated Current (A)": cable.current_rating_amp || "",
+      "Voltage Drop (%)": "",
+      "Cable Tray Size Required": "",
+      "Termination / Glanding": "",
+      "Status": "",
+      "Remarks": "",
+      id: cable.id
+    }));
+    renderCableTable();
+  } catch (error) {
+    console.error('Error fetching cables:', error);
+  }
+}
+
+// Save or update cable API call
+async function saveCable(cableData) {
+  try {
+    const url = cableData.id ? `/api/cable/cables/${cableData.id}` : '/api/cable/cables/';
+    const method = cableData.id ? 'PUT' : 'POST';
+    const response = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cableData)
+    });
+    if (!response.ok) throw new Error('Failed to save cable');
+    await fetchCables();
+  } catch (error) {
+    console.error('Error saving cable:', error);
+  }
+}
+
+// Delete cable via API
+async function deleteCable(id) {
+  try {
+    const response = await fetch(`/api/cable/cables/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Failed to delete cable');
+    await fetchCables();
+  } catch (error) {
+    console.error('Error deleting cable:', error);
+  }
+}
+
+// Initialize cable tool on page load or tool open
+function initCableSchedulingTool() {
+  fetchCables().then(() => {
+    if (rowsCable.length === 0) {
+      addNewCableRow();
+    } else {
+      renderCableTable();
+    }
+  });
+}
+
+let pipeRows = [];
+
+function createEmptyPipeRow(index) {
+  return {
+    "Sl. No": index,
+    "tag": "",
+    "fitting_no": 1,
+    "flow": 0,
+    "length": 10,
+    "nom_dia": 100,
+    "pipe_outer_dia": null,
+    "pipe_thickness": null,
+    "pipe_inner_dia": null,
+    "pipe_code": "",
+    "roughness_pipe": 0,
+    "reynolds": 0,
+    "friction": 0,
+    "k_factor": 0,
+    "velocity": 0,
+    "pressure_drop_per_m": 0,
+    "pressure_drop_total": 0,
+    "critical": ""
+  };
+}
+
+function addNewPipeRow() {
+  pipeRows.push(createEmptyPipeRow(pipeRows.length + 1));
+  renderPipeTable();
+}
+
+function renderPipeTable() {
+  const tbody = document.getElementById("pipeTableBody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  pipeRows.forEach((row, i) => {
+    tbody.insertAdjacentHTML(
+      "beforeend",
+      `<tr>
+        <td>${row["Sl. No"]}</td>
+        <td><input type="text" onchange="updatePipeField(${i}, 'tag', this.value)" value="${row.tag || ''}"/></td>
+        <td><input type="number" onchange="updatePipeField(${i}, 'fitting_no', this.value)" value="${row.fitting_no}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'flow', this.value)" value="${row.flow}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'length', this.value)" value="${row.length}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'nom_dia', this.value)" value="${row.nom_dia}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'pipe_outer_dia', this.value)" value="${row.pipe_outer_dia || ''}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'pipe_thickness', this.value)" value="${row.pipe_thickness || ''}"/></td>
+        <td><input type="number" step="any" onchange="updatePipeField(${i}, 'pipe_inner_dia', this.value)" value="${row.pipe_inner_dia || ''}"/></td>
+        <td><input type="text" onchange="updatePipeField(${i}, 'pipe_code', this.value)" value="${row.pipe_code || ''}"/></td>
+        <td>${row.roughness_pipe}</td>
+        <td>${row.reynolds}</td>
+        <td>${row.friction}</td>
+        <td>${row.k_factor}</td>
+        <td>${row.velocity}</td>
+        <td>${row.pressure_drop_per_m}</td>
+        <td>${row.pressure_drop_total}</td>
+        <td>${row.critical}</td>
+      </tr>`
+    );
+  });
+}
+
+function updatePipeField(i, field, value) {
+  if (!pipeRows[i]) return;
+  if (
+    ["fitting_no", "flow", "length", "nom_dia", "pipe_outer_dia", "pipe_thickness", "pipe_inner_dia"].includes(
+      field
+    )
+  )
+    value = value === "" ? null : Number(value);
+  pipeRows[i][field] = value;
+  renderPipeTable();
+}
+
+// Fetch calculation results from backend endpoint
+async function calculatePipes() {
+  const response = await fetch("/api/pipe/calculate_pipes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(pipeRows),
+  });
+  if (response.ok) {
+    const data = await response.json();
+    pipeRows = data.results; // assuming response returns results array
+    renderPipeTable();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  addNewPipeRow(); // initialize with one row
+});
+
+
+const btnCreateOrder = document.getElementById('btn-create-order');
+const btnUpdatePayment = document.getElementById('btn-update-payment');
+const btnUpdateStage = document.getElementById('btn-update-stage');
+const btnOrders = document.getElementById('btn-orders');
+const btnSearchOrders = document.getElementById('btn-search-orders');
+const btnFilterRemaining = document.getElementById('btn-filter-remaining');
+
+const sections = {
+  create: document.getElementById('section-create-order'),
+  updatePayment: document.getElementById('section-update-payment'),
+  updateStage: document.getElementById('section-update-stage'),
+  orders: document.getElementById('section-orders'),
+  search: document.getElementById('section-search'),
+  filter: document.getElementById('section-filter'),
+};
+
+function showSection(name) {
+  Object.values(sections).forEach(sec => sec.classList.remove('active'));
+  sections[name].classList.add('active');
+  if(name === 'orders') loadAllOrders();
+}
+
+function activateButton(btn) {
+  [btnCreateOrder, btnUpdatePayment, btnUpdateStage, btnOrders, btnSearchOrders, btnFilterRemaining]
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+btnCreateOrder.addEventListener('click', () => { showSection('create'); activateButton(btnCreateOrder); });
+btnUpdatePayment.addEventListener('click', () => { showSection('updatePayment'); activateButton(btnUpdatePayment); });
+btnUpdateStage.addEventListener('click', () => { showSection('updateStage'); activateButton(btnUpdateStage); });
+btnOrders.addEventListener('click', () => { showSection('orders'); activateButton(btnOrders); });
+btnSearchOrders.addEventListener('click', () => { showSection('search'); activateButton(btnSearchOrders); });
+btnFilterRemaining.addEventListener('click', () => { showSection('filter'); activateButton(btnFilterRemaining); });
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-IN', {style: 'currency', currency: 'INR'}).format(value);
+}
+
+function getStageName(index) {
+  const stages = [
+    "Design Review", "Concept MEP Design", "Detailed Design & Drawings", "Coordination & Clash Resolution",
+    "Approvals", "Procurement", "Installation/Execution", "Testing & Commissioning", "Handover"
+  ];
+  if(index == null || index < 0 || index >= stages.length) return "";
+  return stages[index];
+}
+
+function renderOrdersTable(orders, containerId, showActions=true) {
+  if(!orders.length) {
+    document.getElementById(containerId).innerHTML = '<p>No orders found.</p>';
+    return;
+  }
+  let html = `<table aria-label="Orders Table"><thead><tr>
+    <th>SL No</th><th>Order ID</th><th>Project</th><th>Architect</th>
+    <th>Client Name</th><th>Phone</th><th>GST No</th><th>Address</th>
+    <th>Total Amount</th><th>Amount Paid</th><th>Paid %</th><th>Remaining</th>
+    <th>Current Stage</th><th>Progress %</th>
+    <th>Start Date</th><th>Last Invoice</th><th>End Date</th><th>Created At</th>
+    <th>Status</th><th>Actions</th></tr></thead><tbody>`;
+
+  orders.forEach((o,i) => {
+    html += `<tr>
+      <td>${o.sl_no || i+1}</td><td>${o.id}</td><td>${o.project_name}</td><td>${o.architect_name}</td>
+      <td>${o.client_name || ""}</td><td>${o.client_phone || ""}</td><td>${o.client_gst || ""}</td><td>${o.client_address || ""}</td>
+      <td>${formatCurrency(o.total_amount)}</td><td>${formatCurrency(o.amount_paid)}</td><td>${o.paid_percent.toFixed(2)}%</td><td>${formatCurrency(o.remaining_amount)}</td>
+      <td>${getStageName(o.progress_stage_index)}</td><td>${o.progress_percent.toFixed(2)}%</td><td>${o.start_date}</td><td>${o.last_invoice_date}</td><td>${o.end_date || ""}</td><td>${o.created_at}</td>
+      <td>${o.remaining_percent <= 0.01 ? '<span class="status-paid">Paid</span>' : '<span class="status-pending">Pending</span>'}</td>
+      <td>${showActions ? `<button class="btn-small btn-invoice" onclick="viewInvoice('${o.id}')">Invoice</button>
+      <button class="btn-small btn-delete" onclick="deleteOrder('${o.id}')">Delete</button>` : ''}</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  document.getElementById(containerId).innerHTML = html;
+}
+
+// SEARCH and SUGGEST
+const searchInput = document.getElementById("search_keyword");
+const suggestionsContainer = document.getElementById("suggestions");
+const searchResultsContainer = document.getElementById("search-results");
+const btnSearch = document.getElementById("btn-search");
+
+btnSearch.addEventListener("click", () => {
+  const keyword = searchInput.value.trim();
+  if (!keyword) {
+    alert("Enter a keyword to search");
+    return;
+  }
+  searchResultsContainer.innerHTML = "Searching...";
+  fetch(`/api/order/orders/search/?keyword=${encodeURIComponent(keyword)}`)
+    .then(resp => {
+      if (!resp.ok) throw new Error("Search failed: " + resp.statusText);
+      return resp.json();
+    })
+    .then(data => {
+      if (data.length === 0) {
+        searchResultsContainer.innerHTML = "<p>No matching orders found.</p>";
+      } else {
+        renderOrdersTable(data, "search-results", false);
+      }
+      suggestionsContainer.style.display = "none";
+    })
+    .catch(err => {
+      searchResultsContainer.innerHTML = `<p style="color:red;">${err.message}</p>`;
+    });
+});
+
+searchInput.addEventListener("input", () => {
+  const val = searchInput.value.trim().toLowerCase();
+  if (val.length === 0) {
+    suggestionsContainer.style.display = "none";
+    return;
+  }
+  fetch(`/api/order/orders/search/?keyword=${encodeURIComponent(val)}`)
+    .then(resp => resp.ok ? resp.json() : Promise.reject("Failed to fetch suggestions"))
+    .then(orders => {
+      suggestionsContainer.innerHTML = "";
+      const shown = new Set();
+      orders.forEach(order => {
+        const text = `${order.project_name || ""} - ${order.architect_name || ""}`;
+        if (!shown.has(text)) {
+          const div = document.createElement("div");
+          div.textContent = text;
+          div.onclick = () => {
+            searchInput.value = order.project_name || "";
+            suggestionsContainer.style.display = "none";
+            btnSearch.click();
+          };
+          suggestionsContainer.appendChild(div);
+          shown.add(text);
+        }
+      });
+      suggestionsContainer.style.display = orders.length ? "block" : "none";
+    })
+    .catch(() => {
+      suggestionsContainer.style.display = "none";
+    });
+});
+
+// INVOICE MODAL/DOWNLOAD
+function closeInvoiceModal() {
+  document.getElementById("invoiceModal").style.display = "none";
+}
+window.onclick = function(event) {
+  if(event.target === document.getElementById("invoiceModal")) closeInvoiceModal();
+};
+async function viewInvoice(orderId) {
+  try {
+    const resp = await fetch(`/api/order/orders/${orderId}/invoice_json`);
+    if (!resp.ok) throw new Error(`Failed to load invoice for ${orderId}`);
+    const invoice = await resp.json();
+    const draftInvoiceAmount = isNaN(parseFloat(invoice.draft_invoice_amount)) ? 0 : parseFloat(invoice.draft_invoice_amount);
+    const html = `
+      <h3>Invoice for Order ID: ${invoice.id}</h3>
+      <b>Project Name:</b> ${invoice.project_name || "N/A"}<br>
+      <b>Client Name:</b> ${invoice.client_name || "N/A"}<br>
+      <b>Phone:</b> ${invoice.client_phone || "N/A"}<br>
+      <b>Address:</b> ${invoice.client_address || "N/A"}<br>
+      <b>GST No:</b> ${invoice.client_gst || "N/A"}<br>
+      <b>Work Progress:</b> ${parseFloat(invoice.progress_percent).toFixed(2)}%<br>
+      <b>Work Pending:</b> ${(100 - parseFloat(invoice.progress_percent)).toFixed(2)}%<br>
+      <b>Total Amount:</b> ₹${parseFloat(invoice.total_amount).toFixed(2)}<br>
+      <b>Amount Paid:</b> ₹${parseFloat(invoice.amount_paid).toFixed(2)}<br>
+      <b>Remaining Amount:</b> ₹${parseFloat(invoice.remaining_amount).toFixed(2)}<br>
+      <b>Payable Amount for Work Done:</b> ₹${draftInvoiceAmount.toFixed(2)}<br>
+    `;
+    document.getElementById("invoiceFields").innerHTML = html;
+    document.getElementById("invoiceModal").style.display = "flex";
+    window.currentInvoiceOrderId = orderId;
+  } catch(error) {
+    alert(error.message);
+  }
+}
+
+function downloadInvoicePDF() {
+  if(window.currentInvoiceOrderId) {
+    window.open(`/api/order/orders/${window.currentInvoiceOrderId}/invoice_pdf`, "_blank");
+  }
+}
+
+window.deleteOrder = async function(id) {
+  if(!confirm(`Delete order ${id}? This action cannot be undone.`)) return;
+  try {
+    const resp = await fetch(`/api/order/orders/${id}/`, {method: "DELETE"});
+    if(!resp.ok) throw new Error(await resp.text());
+    alert(`Order ${id} deleted.`);
+    loadAllOrders();
+  } catch(error) {
+    alert(`Delete failed: ${error.message}`);
+  }
+};
+
+document.getElementById("form-create-order").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const order_id = document.getElementById("order_id").value.trim();
+  const project_name = document.getElementById("project_name").value.trim();
+  const architect_name = document.getElementById("architect_name").value.trim();
+  const client_name = document.getElementById("client_name").value.trim();
+  const client_phone = document.getElementById("client_phone").value.trim();
+  const client_gst = document.getElementById("client_gst").value.trim();
+  const client_address = document.getElementById("client_address").value.trim();
+  const total_amount = Number(document.getElementById("total_amount").value);
+  const amount_paid = Number(document.getElementById("amount_paid").value);
+
+  if(!order_id || !project_name || !architect_name || total_amount <= 0 || amount_paid < 0) {
+    alert("Please fill out all required fields correctly.");
+    return;
+  }
+
+  try {
+    const resp = await fetch(`/api/order/orders/`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({id:order_id, project_name, architect_name, client_name, client_phone, client_gst, client_address, total_amount, amount_paid}),
+    });
+    if(!resp.ok) throw new Error(await resp.text());
+    const json = await resp.json();
+    alert(`Order created with ID ${json.id}`);
+    e.target.reset();
+    loadAllOrders();
+  } catch(e) {
+    alert("Failed to create order: "+e.message);
+  }
+});
+
+document.getElementById("form-update-payment").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const order_id = document.getElementById("upd_order_id").value.trim();
+  const amount_paid = Number(document.getElementById("upd_amount_paid").value);
+
+  if(!order_id) {
+    alert("Order ID must be provided.");
+    return;
+  }
+  if(isNaN(amount_paid) || amount_paid <= 0) {
+    alert("Please enter a valid positive Payment Amount.");
+    return;
+  }
+
+  try {
+    const resp = await fetch(`/api/order/orders/${order_id}/`, {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({amount_paid}),
+    });
+    if(!resp.ok) throw new Error(await resp.text());
+    const json = await resp.json();
+    const msgDiv = document.getElementById("update-payment-msg");
+    msgDiv.textContent = `Order ${json.id} updated successfully.`;
+    msgDiv.style.color = "green";
+  } catch(e) {
+    alert("Update failed: "+e.message);
+  }
+});
+
+document.getElementById("form-update-stage").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const order_id = document.getElementById("upd_stage_order_id").value.trim();
+  const progress_stage_index = Number(document.getElementById("upd_stage").value);
+
+  if(!order_id) {
+    alert("Order ID must be provided.");
+    return;
+  }
+  if(isNaN(progress_stage_index) || progress_stage_index < 0) {
+    alert("Please select a valid Project Stage.");
+    return;
+  }
+
+  try {
+    const resp = await fetch(`/api/order/orders/${order_id}/`, {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({progress_stage_index}),
+    });
+    if(!resp.ok) throw new Error(await resp.text());
+    const json = await resp.json();
+    const msgDiv = document.getElementById("update-stage-msg");
+    msgDiv.textContent = `Project stage for Order ${json.id} updated to "${getStageName(json.progress_stage_index)}".`;
+    msgDiv.style.color = "green";
+  } catch(e) {
+    alert("Update failed: "+e.message);
+  }
+});
+
+// FILTER orders by remaining percent
+document.getElementById("btn-filter").addEventListener("click", async () => {
+  const percent = Number(document.getElementById("filter_percent").value);
+  if(isNaN(percent) || percent < 0 || percent > 100) {
+    alert("Please enter a valid remaining % value (0-100).");
+    return;
+  }
+  const resultsDiv = document.getElementById("filter-results");
+  resultsDiv.innerHTML = "Loading...";
+  try {
+    const resp = await fetch(`/api/order/orders/filter/?percent=${percent}`);
+    if(!resp.ok) throw new Error(await resp.text());
+    const data = await resp.json();
+    renderOrdersTable(data, "filter-results", false);
+  } catch(e) {
+    resultsDiv.innerHTML = `<p style="color:red;">${e.message}</p>`;
+  }
+});
+
+async function loadAllOrders() {
+  try {
+    const resp = await fetch(`/api/order/orders/`);
+    if(!resp.ok) throw new Error(await resp.text());
+    const orders = await resp.json();
+    renderOrdersTable(orders, "all-orders", true);
+  } catch(e) {
+    document.getElementById("all-orders").innerHTML = `<p style="color:red;">${e.message}</p>`;
+  }
+}
+
+// Load the orders on startup
+showSection('orders');
+activateButton(btnOrders);
+loadAllOrders();
+
+
+</script>
+</body>
+</html>
